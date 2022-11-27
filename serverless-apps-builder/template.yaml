@@ -1,0 +1,629 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Serverless patterns - Amazon API Gateway REST API with Lambda Authorizer
+
+Resources:
+  # REST API
+  AppApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: apigw-lambda-authorizer
+      Description: Lambda Authorizer REST API
+
+  ### Lambda Request Authorizer Python
+
+  RequestAuthorizerPythonResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt AppApi.RootResourceId
+      PathPart: "req-auth-python"
+      RestApiId: !Ref AppApi
+
+  # GET Method with Lambda authorizer request enabled
+  RequestAuthorizerPythonGet:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref AppApi
+      ResourceId: !Ref RequestAuthorizerPythonResource
+      HttpMethod: GET
+      AuthorizationType: CUSTOM
+      AuthorizerId: !Ref AuthorizersLambdaRequestPython
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Join [
+            "",
+            [
+              "arn:aws:apigateway:",
+              !Ref AWS::Region,
+              ":lambda:path/2015-03-31/functions/",
+              !GetAtt AppRequestAuthorizerPythonFunction.Arn,
+              "/invocations",
+            ],
+          ]
+
+  # Lambda Request Authorizer
+  AuthorizersLambdaRequestPython:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: AuthorizersLambdaRequestPython
+      Type: REQUEST
+      RestApiId: !Ref AppApi
+      IdentitySource: method.request.querystring.QueryString1
+      AuthorizerResultTtlInSeconds: 0
+      AuthorizerUri:
+        !Join [
+          "",
+          [
+            "arn:aws:apigateway:",
+            !Ref AWS::Region,
+            ":lambda:path/2015-03-31/functions/",
+            !GetAtt RequestAuthorizerPythonFunction.Arn,
+            "/invocations",
+          ],
+        ]
+
+  # AppRequestAuthorizerPython function
+  AppRequestAuthorizerPythonFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: appRequestAuthorizerPython
+      Description: Request Authorizer Python Application
+      Runtime: python3.9
+      CodeUri: scenarios/python
+      Handler: appRequestAuthorizer.lambda_handler
+      MemorySize: 128
+      Timeout: 3
+
+  # requestAuthorizerPython function
+  RequestAuthorizerPythonFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: requestAuthorizerPython
+      Description: Request Authorizer Python
+      Runtime: python3.9
+      CodeUri: scenarios/python
+      Handler: requestAuthorizer.lambda_handler
+      MemorySize: 128
+      Timeout: 3
+
+  # Permission to allow AppRequestAuthorizerPythonFunction invocation from API Gateway
+  AppRequestAuthorizerPythonPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AppRequestAuthorizerPythonFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/*/GET/req-auth-python
+
+  # Permission to allow RequestAuthorizerPythonFunction invocation from API Gateway
+  RequestAuthorizerPythonFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref RequestAuthorizerPythonFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambdaRequestPython}
+
+  ### Lambda Token Authorizer Python
+
+  TokenAuthorizerPythonResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt AppApi.RootResourceId
+      PathPart: "tkn-auth-python"
+      RestApiId: !Ref AppApi
+
+  # GET Method with Lambda authorizer token enabled
+  TokenAuthorizerPythonGet:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref AppApi
+      ResourceId: !Ref TokenAuthorizerPythonResource
+      HttpMethod: GET
+      AuthorizationType: CUSTOM
+      AuthorizerId: !Ref AuthorizersLambdaTokenPython
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Join [
+            "",
+            [
+              "arn:aws:apigateway:",
+              !Ref AWS::Region,
+              ":lambda:path/2015-03-31/functions/",
+              !GetAtt AppTokenAuthorizerPythonFunction.Arn,
+              "/invocations",
+            ],
+          ]
+
+  # Lambda Token Authorizer
+  AuthorizersLambdaTokenPython:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: AuthorizersLambdaTokenPython
+      Type: TOKEN
+      RestApiId: !Ref AppApi
+      IdentitySource: method.request.header.authorizationToken
+      AuthorizerResultTtlInSeconds: 0
+      AuthorizerUri:
+        !Join [
+          "",
+          [
+            "arn:aws:apigateway:",
+            !Ref AWS::Region,
+            ":lambda:path/2015-03-31/functions/",
+            !GetAtt TokenAuthorizerPythonFunction.Arn,
+            "/invocations",
+          ],
+        ]
+
+  # AppTokenAuthorizerPython function
+  AppTokenAuthorizerPythonFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: appTokenAuthorizerPython
+      Description: Token Authorizer Python Application
+      Runtime: python3.9
+      CodeUri: scenarios/python
+      Handler: appTokenAuthorizer.lambda_handler
+      MemorySize: 128
+      Timeout: 3
+
+  # tokenAuthorizerPython function
+  TokenAuthorizerPythonFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: tokenAuthorizerPython
+      Description: Token Authorizer Python
+      Runtime: python3.9
+      CodeUri: scenarios/python
+      Handler: tokenAuthorizer.lambda_handler
+      MemorySize: 128
+      Timeout: 3
+
+  # Permission to allow AppTokenAuthorizerPythonFunction invocation from API Gateway
+  AppTokenAuthorizerPythonPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AppTokenAuthorizerPythonFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/*/GET/tkn-auth-python
+
+  # Permission to allow TokenAuthorizerPythonFunction invocation from API Gateway
+  TokenAuthorizerPythonFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref TokenAuthorizerPythonFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambdaTokenPython}
+
+  ### Lambda Request Authorizer Node
+
+  RequestAuthorizerNodeResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt AppApi.RootResourceId
+      PathPart: "req-auth-node"
+      RestApiId: !Ref AppApi
+
+  # GET Method with Lambda authorizer request enabled
+  RequestAuthorizerNodeGet:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref AppApi
+      ResourceId: !Ref RequestAuthorizerNodeResource
+      HttpMethod: GET
+      AuthorizationType: CUSTOM
+      AuthorizerId: !Ref AuthorizersLambdaRequestNode
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Join [
+            "",
+            [
+              "arn:aws:apigateway:",
+              !Ref AWS::Region,
+              ":lambda:path/2015-03-31/functions/",
+              !GetAtt AppRequestAuthorizerNodeFunction.Arn,
+              "/invocations",
+            ],
+          ]
+
+  # Lambda Request Authorizer
+  AuthorizersLambdaRequestNode:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: AuthorizersLambdaRequestNode
+      Type: REQUEST
+      RestApiId: !Ref AppApi
+      IdentitySource: method.request.querystring.QueryString1
+      AuthorizerResultTtlInSeconds: 0
+      AuthorizerUri:
+        !Join [
+          "",
+          [
+            "arn:aws:apigateway:",
+            !Ref AWS::Region,
+            ":lambda:path/2015-03-31/functions/",
+            !GetAtt RequestAuthorizerNodeFunction.Arn,
+            "/invocations",
+          ],
+        ]
+
+  # AppRequestAuthorizerNode function
+  AppRequestAuthorizerNodeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: appRequestAuthorizerNode
+      Description: Request Authorizer Node Application
+      Runtime: nodejs16.x
+      CodeUri: scenarios/node
+      Handler: appRequestAuthorizer.handler
+      MemorySize: 128
+      Timeout: 3
+
+  # requestAuthorizerNode function
+  RequestAuthorizerNodeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: requestAuthorizerNode
+      Description: Request Authorizer Node
+      Runtime: nodejs16.x
+      CodeUri: scenarios/node
+      Handler: requestAuthorizer.handler
+      MemorySize: 128
+      Timeout: 3
+
+  # Permission to allow AppRequestAuthorizerNodeFunction invocation from API Gateway
+  AppRequestAuthorizerNodePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AppRequestAuthorizerNodeFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/*/GET/req-auth-node
+
+  # Permission to allow RequestAuthorizerNodeFunction invocation from API Gateway
+  RequestAuthorizerNodeFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref RequestAuthorizerNodeFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambdaRequestNode}
+
+  ### Lambda Token Authorizer Node
+
+  TokenAuthorizerNodeResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt AppApi.RootResourceId
+      PathPart: "tkn-auth-node"
+      RestApiId: !Ref AppApi
+
+  # GET Method with Lambda authorizer token enabled
+  TokenAuthorizerNodeGet:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref AppApi
+      ResourceId: !Ref TokenAuthorizerNodeResource
+      HttpMethod: GET
+      AuthorizationType: CUSTOM
+      AuthorizerId: !Ref AuthorizersLambdaTokenNode
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Join [
+            "",
+            [
+              "arn:aws:apigateway:",
+              !Ref AWS::Region,
+              ":lambda:path/2015-03-31/functions/",
+              !GetAtt AppTokenAuthorizerNodeFunction.Arn,
+              "/invocations",
+            ],
+          ]
+
+  # Lambda Token Authorizer
+  AuthorizersLambdaTokenNode:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: AuthorizersLambdaTokenNode
+      Type: TOKEN
+      RestApiId: !Ref AppApi
+      IdentitySource: method.request.header.authorizationToken
+      AuthorizerResultTtlInSeconds: 0
+      AuthorizerUri:
+        !Join [
+          "",
+          [
+            "arn:aws:apigateway:",
+            !Ref AWS::Region,
+            ":lambda:path/2015-03-31/functions/",
+            !GetAtt TokenAuthorizerNodeFunction.Arn,
+            "/invocations",
+          ],
+        ]
+
+  # AppTokenAuthorizerNode function
+  AppTokenAuthorizerNodeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: appTokenAuthorizerNode
+      Description: Token Authorizer Node Application
+      Runtime: nodejs16.x
+      CodeUri: scenarios/node
+      Handler: appTokenAuthorizer.handler
+      MemorySize: 128
+      Timeout: 3
+
+  # tokenAuthorizerNode function
+  TokenAuthorizerNodeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: tokenAuthorizerNode
+      Description: Token Authorizer Node
+      Runtime: nodejs16.x
+      CodeUri: scenarios/node
+      Handler: tokenAuthorizer.handler
+      MemorySize: 128
+      Timeout: 3
+
+  # Permission to allow AppTokenAuthorizerNodeFunction invocation from API Gateway
+  AppTokenAuthorizerNodePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AppTokenAuthorizerNodeFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/*/GET/tkn-auth-node
+
+  # Permission to allow TokenAuthorizerNodeFunction invocation from API Gateway
+  TokenAuthorizerNodeFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref TokenAuthorizerNodeFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambdaTokenNode}
+
+  ### Lambda Request Authorizer Go
+
+  RequestAuthorizerGoResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt AppApi.RootResourceId
+      PathPart: "req-auth-go"
+      RestApiId: !Ref AppApi
+
+  # GET Method with Lambda authorizer token enabled
+  RequestAuthorizerGoGet:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref AppApi
+      ResourceId: !Ref RequestAuthorizerGoResource
+      HttpMethod: GET
+      AuthorizationType: CUSTOM
+      AuthorizerId: !Ref AuthorizersLambdaRequestGo
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Join [
+            "",
+            [
+              "arn:aws:apigateway:",
+              !Ref AWS::Region,
+              ":lambda:path/2015-03-31/functions/",
+              !GetAtt AppRequestAuthorizerGoFunction.Arn,
+              "/invocations",
+            ],
+          ]
+
+  # Lambda Request Authorizer
+  AuthorizersLambdaRequestGo:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: AuthorizersLambdaRequestGo
+      Type: REQUEST
+      RestApiId: !Ref AppApi
+      IdentitySource: method.request.querystring.QueryString1
+      AuthorizerResultTtlInSeconds: 0
+      AuthorizerUri:
+        !Join [
+          "",
+          [
+            "arn:aws:apigateway:",
+            !Ref AWS::Region,
+            ":lambda:path/2015-03-31/functions/",
+            !GetAtt RequestAuthorizerGoFunction.Arn,
+            "/invocations",
+          ],
+        ]
+
+  # AppRequestAuthorizerGo function
+  AppRequestAuthorizerGoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: appRequestAuthorizerGo
+      Description: Request Authorizer Go Application
+      Runtime: go1.x
+      CodeUri: scenarios/go/functions/request
+      Handler: appRequestAuthorizer
+      MemorySize: 128
+      Timeout: 3
+
+  # requestAuthorizerGo function
+  RequestAuthorizerGoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: requestAuthorizerGo
+      Description: Request Authorizer Go
+      Runtime: go1.x
+      CodeUri: scenarios/go/authorizers/request
+      Handler: requestAuthorizer
+      MemorySize: 128
+      Timeout: 3
+
+  # Permission to allow AppRequestAuthorizerGoFunction invocation from API Gateway
+  AppRequestAuthorizerGoPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AppRequestAuthorizerGoFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/*/GET/req-auth-go
+
+  # Permission to allow RequestAuthorizerGoFunction invocation from API Gateway
+  RequestAuthorizerGoFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref RequestAuthorizerGoFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambdaRequestGo}
+
+  ### Lambda Token Authorizer Go
+
+  TokenAuthorizerGoResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt AppApi.RootResourceId
+      PathPart: "tkn-auth-go"
+      RestApiId: !Ref AppApi
+
+  # GET Method with Lambda authorizer token enabled
+  TokenAuthorizerGoGet:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref AppApi
+      ResourceId: !Ref TokenAuthorizerGoResource
+      HttpMethod: GET
+      AuthorizationType: CUSTOM
+      AuthorizerId: !Ref AuthorizersLambdaTokenGo
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Join [
+            "",
+            [
+              "arn:aws:apigateway:",
+              !Ref AWS::Region,
+              ":lambda:path/2015-03-31/functions/",
+              !GetAtt AppTokenAuthorizerGoFunction.Arn,
+              "/invocations",
+            ],
+          ]
+
+  # Lambda Token Authorizer Go
+  AuthorizersLambdaTokenGo:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: AuthorizersLambdaTokenGo
+      Type: TOKEN
+      RestApiId: !Ref AppApi
+      IdentitySource: method.request.header.AuthorizationToken
+      AuthorizerResultTtlInSeconds: 0
+      AuthorizerUri:
+        !Join [
+          "",
+          [
+            "arn:aws:apigateway:",
+            !Ref AWS::Region,
+            ":lambda:path/2015-03-31/functions/",
+            !GetAtt TokenAuthorizerGoFunction.Arn,
+            "/invocations",
+          ],
+        ]
+
+  # AppTokenAuthorizerGo function
+  AppTokenAuthorizerGoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: appTokenAuthorizerGo
+      Description: Token Authorizer Go Application
+      Runtime: go1.x
+      CodeUri: scenarios/go/functions/token
+      Handler: appTokenAuthorizer
+      MemorySize: 128
+      Timeout: 3
+
+  # tokenAuthorizerGo function
+  TokenAuthorizerGoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: tokenAuthorizerGo
+      Description: Token Authorizer Go
+      Runtime: go1.x
+      CodeUri: scenarios/go/authorizers/token
+      Handler: tokenAuthorizer
+      MemorySize: 128
+      Timeout: 3
+
+  # Permission to allow AppTokenAuthorizerGoFunction invocation from API Gateway
+  AppTokenAuthorizerGoPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AppTokenAuthorizerGoFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/*/GET/tkn-auth-go
+
+  # Permission to allow TokenAuthorizerGoFunction invocation from API Gateway
+  TokenAuthorizerGoFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref TokenAuthorizerGoFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambdaTokenGo}
+
+  ### Deployment and Output Setup
+
+  Deployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - RequestAuthorizerPythonGet
+      - TokenAuthorizerPythonGet
+      - RequestAuthorizerNodeGet
+      - TokenAuthorizerNodeGet
+      - RequestAuthorizerGoGet
+      - TokenAuthorizerGoGet
+    Properties:
+      RestApiId: !Ref AppApi
+
+  Stage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      StageName: v1
+      RestApiId: !Ref AppApi
+      DeploymentId: !Ref Deployment
+
+Outputs:
+  # API Gateway endpoint to be used during performance tests
+  RequestAuthorizerPythonGetEndPoint:
+    Description: !GetAtt RequestAuthorizerPythonFunction.FunctionName
+    Value: !Sub "https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/req-auth-python?QueryString1=queryValue1"
+  TokenAuthorizerPythonGetEndPoint:
+    Description: !GetAtt TokenAuthorizerPythonFunction.FunctionName
+    Value: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/tkn-auth-python -H "AuthorizationToken: Bearer allow"'
+  RequestAuthorizerNodeGetEndPoint:
+    Description: !GetAtt RequestAuthorizerNodeFunction.FunctionName
+    Value: !Sub "https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/req-auth-node?QueryString1=queryValue1"
+  TokenAuthorizerNodeGetEndPoint:
+    Description: !GetAtt TokenAuthorizerNodeFunction.FunctionName
+    Value: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/tkn-auth-node -H "AuthorizationToken: Bearer allow"'
+  RequestAuthorizerGoGetEndPoint:
+    Description: !GetAtt RequestAuthorizerGoFunction.FunctionName
+    Value: !Sub "https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/req-auth-go?QueryString1=queryValue1"
+  TokenAuthorizerGoGetEndPoint:
+    Description: !GetAtt TokenAuthorizerGoFunction.FunctionName
+    Value: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/tkn-auth-go -H "AuthorizationToken: Bearer allow"'

@@ -1,0 +1,14 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "Lambda Authorizer Benchmarking Tool Commands",
+  "main": "command.js",
+  "scripts": {
+    "start": "node command.js"
+  },
+  "author": "Cornelius (21126747)",
+  "license": "ISC",
+  "dependencies": {
+    "artillery": "^2.0.0-27"
+  }
+}

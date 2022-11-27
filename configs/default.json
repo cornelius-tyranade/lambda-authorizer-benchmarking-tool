@@ -1,0 +1,9 @@
+{
+  "artillery": {
+    "duration": 10,
+    "rate": 10
+  },
+  "logsInsight": {
+    "timeRange": 120
+  }
+}

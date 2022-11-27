@@ -1,0 +1,14 @@
+config:
+  target: ${endpoint}
+  phases:
+    - duration: ${duration}
+      arrivalRate: ${rate}
+      name: benchmarking
+
+scenarios:
+  - name: ${identifier}
+    flow:
+      - get:
+          url: ${postfix-url}?QueryString1=queryValue1
+          expect:
+            - statusCode: 200

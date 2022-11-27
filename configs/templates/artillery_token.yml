@@ -1,0 +1,16 @@
+config:
+  target: ${endpoint}
+  phases:
+    - duration: ${duration}
+      arrivalRate: ${rate}
+      name: benchmarking
+
+scenarios:
+  - name: ${identifier}
+    flow:
+      - get:
+          url: ${postfix-url}
+          headers:
+            AuthorizationToken: "Bearer allow"
+          expect:
+            - statusCode: 200

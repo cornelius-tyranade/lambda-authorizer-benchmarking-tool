@@ -1,0 +1,4 @@
+serverless-apps-builder/.aws-sam
+serverless-apps-builder/logs
+serverless-apps-builder/outputs
+node_modules
