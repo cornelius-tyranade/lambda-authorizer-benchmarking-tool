@@ -1,0 +1,526 @@
+
+	Deploying with following values
+	===============================
+	Stack name                   : lambda-authorizer-benchmarking-tool
+	Region                       : eu-west-1
+	Confirm changeset            : False
+	Disable rollback             : False
+	Deployment s3 bucket         : aws-sam-cli-managed-default-samclisourcebucket-1eqdwfx0dtojv
+	Capabilities                 : ["CAPABILITY_IAM"]
+	Parameter overrides          : {}
+	Signing Profiles             : {}
+
+Initiating deployment
+=====================
+
+Waiting for changeset to be created..
+CloudFormation stack changeset
+-------------------------------------------------------------------------------------------------
+Operation                LogicalResourceId        ResourceType             Replacement            
+-------------------------------------------------------------------------------------------------
++ Add                    AppApi                   AWS::ApiGateway::RestA   N/A                    
+                                                  pi                                              
++ Add                    AppRequestAuthorizerGo   AWS::IAM::Role           N/A                    
+                         FunctionRole                                                             
++ Add                    AppRequestAuthorizerGo   AWS::Lambda::Function    N/A                    
+                         Function                                                                 
++ Add                    AppRequestAuthorizerGo   AWS::Lambda::Permissio   N/A                    
+                         Permission               n                                               
++ Add                    AppRequestAuthorizerNo   AWS::IAM::Role           N/A                    
+                         deFunctionRole                                                           
++ Add                    AppRequestAuthorizerNo   AWS::Lambda::Function    N/A                    
+                         deFunction                                                               
++ Add                    AppRequestAuthorizerNo   AWS::Lambda::Permissio   N/A                    
+                         dePermission             n                                               
++ Add                    AppRequestAuthorizerPy   AWS::IAM::Role           N/A                    
+                         thonFunctionRole                                                         
++ Add                    AppRequestAuthorizerPy   AWS::Lambda::Function    N/A                    
+                         thonFunction                                                             
++ Add                    AppRequestAuthorizerPy   AWS::Lambda::Permissio   N/A                    
+                         thonPermission           n                                               
++ Add                    AppTokenAuthorizerGoFu   AWS::IAM::Role           N/A                    
+                         nctionRole                                                               
++ Add                    AppTokenAuthorizerGoFu   AWS::Lambda::Function    N/A                    
+                         nction                                                                   
++ Add                    AppTokenAuthorizerGoPe   AWS::Lambda::Permissio   N/A                    
+                         rmission                 n                                               
++ Add                    AppTokenAuthorizerNode   AWS::IAM::Role           N/A                    
+                         FunctionRole                                                             
++ Add                    AppTokenAuthorizerNode   AWS::Lambda::Function    N/A                    
+                         Function                                                                 
++ Add                    AppTokenAuthorizerNode   AWS::Lambda::Permissio   N/A                    
+                         Permission               n                                               
++ Add                    AppTokenAuthorizerPyth   AWS::IAM::Role           N/A                    
+                         onFunctionRole                                                           
++ Add                    AppTokenAuthorizerPyth   AWS::Lambda::Function    N/A                    
+                         onFunction                                                               
++ Add                    AppTokenAuthorizerPyth   AWS::Lambda::Permissio   N/A                    
+                         onPermission             n                                               
++ Add                    AuthorizersLambdaReque   AWS::ApiGateway::Autho   N/A                    
+                         stGo                     rizer                                           
++ Add                    AuthorizersLambdaReque   AWS::ApiGateway::Autho   N/A                    
+                         stNode                   rizer                                           
++ Add                    AuthorizersLambdaReque   AWS::ApiGateway::Autho   N/A                    
+                         stPython                 rizer                                           
++ Add                    AuthorizersLambdaToken   AWS::ApiGateway::Autho   N/A                    
+                         Go                       rizer                                           
++ Add                    AuthorizersLambdaToken   AWS::ApiGateway::Autho   N/A                    
+                         Node                     rizer                                           
++ Add                    AuthorizersLambdaToken   AWS::ApiGateway::Autho   N/A                    
+                         Python                   rizer                                           
++ Add                    Deployment               AWS::ApiGateway::Deplo   N/A                    
+                                                  yment                                           
++ Add                    RequestAuthorizerGoFun   AWS::Lambda::Permissio   N/A                    
+                         ctionPermission          n                                               
++ Add                    RequestAuthorizerGoFun   AWS::IAM::Role           N/A                    
+                         ctionRole                                                                
++ Add                    RequestAuthorizerGoFun   AWS::Lambda::Function    N/A                    
+                         ction                                                                    
++ Add                    RequestAuthorizerGoGet   AWS::ApiGateway::Metho   N/A                    
+                                                  d                                               
++ Add                    RequestAuthorizerGoRes   AWS::ApiGateway::Resou   N/A                    
+                         ource                    rce                                             
++ Add                    RequestAuthorizerNodeF   AWS::Lambda::Permissio   N/A                    
+                         unctionPermission        n                                               
++ Add                    RequestAuthorizerNodeF   AWS::IAM::Role           N/A                    
+                         unctionRole                                                              
++ Add                    RequestAuthorizerNodeF   AWS::Lambda::Function    N/A                    
+                         unction                                                                  
++ Add                    RequestAuthorizerNodeG   AWS::ApiGateway::Metho   N/A                    
+                         et                       d                                               
++ Add                    RequestAuthorizerNodeR   AWS::ApiGateway::Resou   N/A                    
+                         esource                  rce                                             
++ Add                    RequestAuthorizerPytho   AWS::Lambda::Permissio   N/A                    
+                         nFunctionPermission      n                                               
++ Add                    RequestAuthorizerPytho   AWS::IAM::Role           N/A                    
+                         nFunctionRole                                                            
++ Add                    RequestAuthorizerPytho   AWS::Lambda::Function    N/A                    
+                         nFunction                                                                
++ Add                    RequestAuthorizerPytho   AWS::ApiGateway::Metho   N/A                    
+                         nGet                     d                                               
++ Add                    RequestAuthorizerPytho   AWS::ApiGateway::Resou   N/A                    
+                         nResource                rce                                             
++ Add                    Stage                    AWS::ApiGateway::Stage   N/A                    
++ Add                    TokenAuthorizerGoFunct   AWS::Lambda::Permissio   N/A                    
+                         ionPermission            n                                               
++ Add                    TokenAuthorizerGoFunct   AWS::IAM::Role           N/A                    
+                         ionRole                                                                  
++ Add                    TokenAuthorizerGoFunct   AWS::Lambda::Function    N/A                    
+                         ion                                                                      
++ Add                    TokenAuthorizerGoGet     AWS::ApiGateway::Metho   N/A                    
+                                                  d                                               
++ Add                    TokenAuthorizerGoResou   AWS::ApiGateway::Resou   N/A                    
+                         rce                      rce                                             
++ Add                    TokenAuthorizerNodeFun   AWS::Lambda::Permissio   N/A                    
+                         ctionPermission          n                                               
++ Add                    TokenAuthorizerNodeFun   AWS::IAM::Role           N/A                    
+                         ctionRole                                                                
++ Add                    TokenAuthorizerNodeFun   AWS::Lambda::Function    N/A                    
+                         ction                                                                    
++ Add                    TokenAuthorizerNodeGet   AWS::ApiGateway::Metho   N/A                    
+                                                  d                                               
++ Add                    TokenAuthorizerNodeRes   AWS::ApiGateway::Resou   N/A                    
+                         ource                    rce                                             
++ Add                    TokenAuthorizerPythonF   AWS::Lambda::Permissio   N/A                    
+                         unctionPermission        n                                               
++ Add                    TokenAuthorizerPythonF   AWS::IAM::Role           N/A                    
+                         unctionRole                                                              
++ Add                    TokenAuthorizerPythonF   AWS::Lambda::Function    N/A                    
+                         unction                                                                  
++ Add                    TokenAuthorizerPythonG   AWS::ApiGateway::Metho   N/A                    
+                         et                       d                                               
++ Add                    TokenAuthorizerPythonR   AWS::ApiGateway::Resou   N/A                    
+                         esource                  rce                                             
+-------------------------------------------------------------------------------------------------
+
+Changeset created successfully. arn:aws:cloudformation:eu-west-1:800139991280:changeSet/samcli-deploy1669572978/c73aff3c-92b4-4eed-b52e-df35e0edc2ac
+
+
+2022-11-27 18:16:29 - Waiting for stack create/update to complete
+
+CloudFormation events from stack operations (refresh every 0.5 seconds)
+-------------------------------------------------------------------------------------------------
+ResourceStatus           ResourceType             LogicalResourceId        ResourceStatusReason   
+-------------------------------------------------------------------------------------------------
+CREATE_IN_PROGRESS       AWS::CloudFormation::S   lambda-authorizer-       User Initiated         
+                         tack                     benchmarking-tool                               
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppTokenAuthorizerNode   -                      
+                                                  FunctionRole                                    
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppRequestAuthorizerPy   -                      
+                                                  thonFunctionRole                                
+CREATE_IN_PROGRESS       AWS::IAM::Role           TokenAuthorizerNodeFun   -                      
+                                                  ctionRole                                       
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppTokenAuthorizerGoFu   -                      
+                                                  nctionRole                                      
+CREATE_IN_PROGRESS       AWS::IAM::Role           TokenAuthorizerGoFunct   -                      
+                                                  ionRole                                         
+CREATE_IN_PROGRESS       AWS::ApiGateway::RestA   AppApi                   -                      
+                         pi                                                                       
+CREATE_IN_PROGRESS       AWS::IAM::Role           RequestAuthorizerGoFun   -                      
+                                                  ctionRole                                       
+CREATE_IN_PROGRESS       AWS::IAM::Role           RequestAuthorizerPytho   -                      
+                                                  nFunctionRole                                   
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppTokenAuthorizerPyth   -                      
+                                                  onFunctionRole                                  
+CREATE_IN_PROGRESS       AWS::IAM::Role           TokenAuthorizerPythonF   -                      
+                                                  unctionRole                                     
+CREATE_IN_PROGRESS       AWS::IAM::Role           RequestAuthorizerNodeF   -                      
+                                                  unctionRole                                     
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppRequestAuthorizerGo   -                      
+                                                  FunctionRole                                    
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppRequestAuthorizerPy   Resource creation      
+                                                  thonFunctionRole         Initiated              
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppRequestAuthorizerNo   -                      
+                                                  deFunctionRole                                  
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppTokenAuthorizerNode   Resource creation      
+                                                  FunctionRole             Initiated              
+CREATE_IN_PROGRESS       AWS::IAM::Role           TokenAuthorizerGoFunct   Resource creation      
+                                                  ionRole                  Initiated              
+CREATE_IN_PROGRESS       AWS::IAM::Role           RequestAuthorizerGoFun   Resource creation      
+                                                  ctionRole                Initiated              
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppTokenAuthorizerGoFu   Resource creation      
+                                                  nctionRole               Initiated              
+CREATE_IN_PROGRESS       AWS::IAM::Role           TokenAuthorizerNodeFun   Resource creation      
+                                                  ctionRole                Initiated              
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppTokenAuthorizerPyth   Resource creation      
+                                                  onFunctionRole           Initiated              
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppRequestAuthorizerNo   Resource creation      
+                                                  deFunctionRole           Initiated              
+CREATE_IN_PROGRESS       AWS::IAM::Role           RequestAuthorizerNodeF   Resource creation      
+                                                  unctionRole              Initiated              
+CREATE_IN_PROGRESS       AWS::IAM::Role           RequestAuthorizerPytho   Resource creation      
+                                                  nFunctionRole            Initiated              
+CREATE_IN_PROGRESS       AWS::IAM::Role           AppRequestAuthorizerGo   Resource creation      
+                                                  FunctionRole             Initiated              
+CREATE_IN_PROGRESS       AWS::IAM::Role           TokenAuthorizerPythonF   Resource creation      
+                                                  unctionRole              Initiated              
+CREATE_IN_PROGRESS       AWS::ApiGateway::RestA   AppApi                   Resource creation      
+                         pi                                                Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::RestA   AppApi                   -                      
+                         pi                                                                       
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   RequestAuthorizerGoRes   -                      
+                         rce                      ource                                           
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   TokenAuthorizerNodeRes   -                      
+                         rce                      ource                                           
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   TokenAuthorizerPythonR   -                      
+                         rce                      esource                                         
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   TokenAuthorizerGoResou   -                      
+                         rce                      rce                                             
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   RequestAuthorizerPytho   -                      
+                         rce                      nResource                                       
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   RequestAuthorizerGoRes   Resource creation      
+                         rce                      ource                    Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Resou   RequestAuthorizerGoRes   -                      
+                         rce                      ource                                           
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   TokenAuthorizerPythonR   Resource creation      
+                         rce                      esource                  Initiated              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   RequestAuthorizerPytho   Resource creation      
+                         rce                      nResource                Initiated              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   TokenAuthorizerGoResou   Resource creation      
+                         rce                      rce                      Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Resou   TokenAuthorizerPythonR   -                      
+                         rce                      esource                                         
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   TokenAuthorizerNodeRes   Resource creation      
+                         rce                      ource                    Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Resou   RequestAuthorizerPytho   -                      
+                         rce                      nResource                                       
+CREATE_COMPLETE          AWS::ApiGateway::Resou   TokenAuthorizerGoResou   -                      
+                         rce                      rce                                             
+CREATE_COMPLETE          AWS::ApiGateway::Resou   TokenAuthorizerNodeRes   -                      
+                         rce                      ource                                           
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   RequestAuthorizerNodeR   -                      
+                         rce                      esource                                         
+CREATE_IN_PROGRESS       AWS::ApiGateway::Resou   RequestAuthorizerNodeR   Resource creation      
+                         rce                      esource                  Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Resou   RequestAuthorizerNodeR   -                      
+                         rce                      esource                                         
+CREATE_COMPLETE          AWS::IAM::Role           AppRequestAuthorizerPy   -                      
+                                                  thonFunctionRole                                
+CREATE_COMPLETE          AWS::IAM::Role           RequestAuthorizerGoFun   -                      
+                                                  ctionRole                                       
+CREATE_COMPLETE          AWS::IAM::Role           TokenAuthorizerNodeFun   -                      
+                                                  ctionRole                                       
+CREATE_COMPLETE          AWS::IAM::Role           AppTokenAuthorizerNode   -                      
+                                                  FunctionRole                                    
+CREATE_COMPLETE          AWS::IAM::Role           TokenAuthorizerGoFunct   -                      
+                                                  ionRole                                         
+CREATE_COMPLETE          AWS::IAM::Role           AppTokenAuthorizerGoFu   -                      
+                                                  nctionRole                                      
+CREATE_COMPLETE          AWS::IAM::Role           AppRequestAuthorizerNo   -                      
+                                                  deFunctionRole                                  
+CREATE_COMPLETE          AWS::IAM::Role           RequestAuthorizerPytho   -                      
+                                                  nFunctionRole                                   
+CREATE_COMPLETE          AWS::IAM::Role           RequestAuthorizerNodeF   -                      
+                                                  unctionRole                                     
+CREATE_COMPLETE          AWS::IAM::Role           AppTokenAuthorizerPyth   -                      
+                                                  onFunctionRole                                  
+CREATE_COMPLETE          AWS::IAM::Role           TokenAuthorizerPythonF   -                      
+                                                  unctionRole                                     
+CREATE_COMPLETE          AWS::IAM::Role           AppRequestAuthorizerGo   -                      
+                                                  FunctionRole                                    
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppRequestAuthorizerPy   -                      
+                                                  thonFunction                                    
+CREATE_IN_PROGRESS       AWS::Lambda::Function    RequestAuthorizerGoFun   -                      
+                                                  ction                                           
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppTokenAuthorizerNode   -                      
+                                                  Function                                        
+CREATE_IN_PROGRESS       AWS::Lambda::Function    RequestAuthorizerPytho   -                      
+                                                  nFunction                                       
+CREATE_IN_PROGRESS       AWS::Lambda::Function    TokenAuthorizerGoFunct   -                      
+                                                  ion                                             
+CREATE_IN_PROGRESS       AWS::Lambda::Function    TokenAuthorizerNodeFun   -                      
+                                                  ction                                           
+CREATE_IN_PROGRESS       AWS::Lambda::Function    TokenAuthorizerPythonF   -                      
+                                                  unction                                         
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppTokenAuthorizerPyth   -                      
+                                                  onFunction                                      
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppTokenAuthorizerGoFu   -                      
+                                                  nction                                          
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppRequestAuthorizerNo   -                      
+                                                  deFunction                                      
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppRequestAuthorizerGo   -                      
+                                                  Function                                        
+CREATE_IN_PROGRESS       AWS::Lambda::Function    RequestAuthorizerNodeF   -                      
+                                                  unction                                         
+CREATE_IN_PROGRESS       AWS::Lambda::Function    RequestAuthorizerGoFun   Resource creation      
+                                                  ction                    Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppTokenAuthorizerNode   Resource creation      
+                                                  Function                 Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Function    TokenAuthorizerPythonF   Resource creation      
+                                                  unction                  Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Function    RequestAuthorizerPytho   Resource creation      
+                                                  nFunction                Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Function    TokenAuthorizerGoFunct   Resource creation      
+                                                  ion                      Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppRequestAuthorizerPy   Resource creation      
+                                                  thonFunction             Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppTokenAuthorizerGoFu   Resource creation      
+                                                  nction                   Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppRequestAuthorizerGo   Resource creation      
+                                                  Function                 Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppTokenAuthorizerPyth   Resource creation      
+                                                  onFunction               Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Function    TokenAuthorizerNodeFun   Resource creation      
+                                                  ction                    Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Function    AppRequestAuthorizerNo   Resource creation      
+                                                  deFunction               Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Function    RequestAuthorizerNodeF   Resource creation      
+                                                  unction                  Initiated              
+CREATE_COMPLETE          AWS::Lambda::Function    AppTokenAuthorizerNode   -                      
+                                                  Function                                        
+CREATE_COMPLETE          AWS::Lambda::Function    AppRequestAuthorizerPy   -                      
+                                                  thonFunction                                    
+CREATE_COMPLETE          AWS::Lambda::Function    RequestAuthorizerGoFun   -                      
+                                                  ction                                           
+CREATE_COMPLETE          AWS::Lambda::Function    TokenAuthorizerPythonF   -                      
+                                                  unction                                         
+CREATE_COMPLETE          AWS::Lambda::Function    RequestAuthorizerPytho   -                      
+                                                  nFunction                                       
+CREATE_COMPLETE          AWS::Lambda::Function    AppTokenAuthorizerGoFu   -                      
+                                                  nction                                          
+CREATE_COMPLETE          AWS::Lambda::Function    TokenAuthorizerGoFunct   -                      
+                                                  ion                                             
+CREATE_COMPLETE          AWS::Lambda::Function    AppRequestAuthorizerGo   -                      
+                                                  Function                                        
+CREATE_COMPLETE          AWS::Lambda::Function    AppTokenAuthorizerPyth   -                      
+                                                  onFunction                                      
+CREATE_COMPLETE          AWS::Lambda::Function    AppRequestAuthorizerNo   -                      
+                                                  deFunction                                      
+CREATE_COMPLETE          AWS::Lambda::Function    TokenAuthorizerNodeFun   -                      
+                                                  ction                                           
+CREATE_COMPLETE          AWS::Lambda::Function    RequestAuthorizerNodeF   -                      
+                                                  unction                                         
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppRequestAuthorizerPy   -                      
+                         n                        thonPermission                                  
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppTokenAuthorizerNode   -                      
+                         n                        Permission                                      
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaToken   -                      
+                         rizer                    Go                                              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaToken   -                      
+                         rizer                    Python                                          
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppRequestAuthorizerPy   Resource creation      
+                         n                        thonPermission           Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppTokenAuthorizerNode   Resource creation      
+                         n                        Permission               Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppTokenAuthorizerGoPe   -                      
+                         n                        rmission                                        
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaReque   -                      
+                         rizer                    stPython                                        
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaReque   -                      
+                         rizer                    stGo                                            
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppRequestAuthorizerGo   -                      
+                         n                        Permission                                      
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppTokenAuthorizerGoPe   Resource creation      
+                         n                        rmission                 Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppRequestAuthorizerNo   -                      
+                         n                        dePermission                                    
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppTokenAuthorizerPyth   -                      
+                         n                        onPermission                                    
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppRequestAuthorizerGo   Resource creation      
+                         n                        Permission               Initiated              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaReque   -                      
+                         rizer                    stNode                                          
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaToken   -                      
+                         rizer                    Node                                            
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppRequestAuthorizerNo   Resource creation      
+                         n                        dePermission             Initiated              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaToken   Resource creation      
+                         rizer                    Python                   Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   AppTokenAuthorizerPyth   Resource creation      
+                         n                        onPermission             Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Autho   AuthorizersLambdaToken   -                      
+                         rizer                    Python                                          
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaReque   Resource creation      
+                         rizer                    stGo                     Initiated              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaReque   Resource creation      
+                         rizer                    stPython                 Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Autho   AuthorizersLambdaReque   -                      
+                         rizer                    stGo                                            
+CREATE_COMPLETE          AWS::ApiGateway::Autho   AuthorizersLambdaReque   -                      
+                         rizer                    stPython                                        
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaReque   Resource creation      
+                         rizer                    stNode                   Initiated              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaToken   Resource creation      
+                         rizer                    Node                     Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Autho   AuthorizersLambdaReque   -                      
+                         rizer                    stNode                                          
+CREATE_COMPLETE          AWS::ApiGateway::Autho   AuthorizersLambdaToken   -                      
+                         rizer                    Node                                            
+CREATE_IN_PROGRESS       AWS::ApiGateway::Autho   AuthorizersLambdaToken   Resource creation      
+                         rizer                    Go                       Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   TokenAuthorizerPythonF   -                      
+                         n                        unctionPermission                               
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   TokenAuthorizerPythonG   -                      
+                         d                        et                                              
+CREATE_COMPLETE          AWS::ApiGateway::Autho   AuthorizersLambdaToken   -                      
+                         rizer                    Go                                              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   TokenAuthorizerPythonF   Resource creation      
+                         n                        unctionPermission        Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   RequestAuthorizerGoFun   -                      
+                         n                        ctionPermission                                 
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   TokenAuthorizerPythonG   Resource creation      
+                         d                        et                       Initiated              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   RequestAuthorizerGoGet   -                      
+                         d                                                                        
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   RequestAuthorizerPytho   -                      
+                         d                        nGet                                            
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   RequestAuthorizerGoFun   Resource creation      
+                         n                        ctionPermission          Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Metho   TokenAuthorizerPythonG   -                      
+                         d                        et                                              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   RequestAuthorizerGoGet   Resource creation      
+                         d                                                 Initiated              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   RequestAuthorizerPytho   Resource creation      
+                         d                        nGet                     Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   RequestAuthorizerPytho   -                      
+                         n                        nFunctionPermission                             
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   RequestAuthorizerNodeF   -                      
+                         n                        unctionPermission                               
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   RequestAuthorizerNodeG   -                      
+                         d                        et                                              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   TokenAuthorizerNodeGet   -                      
+                         d                                                                        
+CREATE_COMPLETE          AWS::ApiGateway::Metho   RequestAuthorizerGoGet   -                      
+                         d                                                                        
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   RequestAuthorizerPytho   Resource creation      
+                         n                        nFunctionPermission      Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   TokenAuthorizerNodeFun   -                      
+                         n                        ctionPermission                                 
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   RequestAuthorizerNodeG   Resource creation      
+                         d                        et                       Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Metho   RequestAuthorizerPytho   -                      
+                         d                        nGet                                            
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   TokenAuthorizerNodeGet   Resource creation      
+                         d                                                 Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   RequestAuthorizerNodeF   Resource creation      
+                         n                        unctionPermission        Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   TokenAuthorizerNodeFun   Resource creation      
+                         n                        ctionPermission          Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Metho   RequestAuthorizerNodeG   -                      
+                         d                        et                                              
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   TokenAuthorizerGoGet     -                      
+                         d                                                                        
+CREATE_COMPLETE          AWS::ApiGateway::Metho   TokenAuthorizerNodeGet   -                      
+                         d                                                                        
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   TokenAuthorizerGoFunct   -                      
+                         n                        ionPermission                                   
+CREATE_IN_PROGRESS       AWS::ApiGateway::Metho   TokenAuthorizerGoGet     Resource creation      
+                         d                                                 Initiated              
+CREATE_IN_PROGRESS       AWS::Lambda::Permissio   TokenAuthorizerGoFunct   Resource creation      
+                         n                        ionPermission            Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Metho   TokenAuthorizerGoGet     -                      
+                         d                                                                        
+CREATE_IN_PROGRESS       AWS::ApiGateway::Deplo   Deployment               -                      
+                         yment                                                                    
+CREATE_IN_PROGRESS       AWS::ApiGateway::Deplo   Deployment               Resource creation      
+                         yment                                             Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Deplo   Deployment               -                      
+                         yment                                                                    
+CREATE_COMPLETE          AWS::Lambda::Permissio   AppRequestAuthorizerPy   -                      
+                         n                        thonPermission                                  
+CREATE_COMPLETE          AWS::Lambda::Permissio   AppTokenAuthorizerNode   -                      
+                         n                        Permission                                      
+CREATE_IN_PROGRESS       AWS::ApiGateway::Stage   Stage                    -                      
+CREATE_COMPLETE          AWS::Lambda::Permissio   AppTokenAuthorizerGoPe   -                      
+                         n                        rmission                                        
+CREATE_COMPLETE          AWS::Lambda::Permissio   AppRequestAuthorizerGo   -                      
+                         n                        Permission                                      
+CREATE_COMPLETE          AWS::Lambda::Permissio   AppRequestAuthorizerNo   -                      
+                         n                        dePermission                                    
+CREATE_COMPLETE          AWS::Lambda::Permissio   AppTokenAuthorizerPyth   -                      
+                         n                        onPermission                                    
+CREATE_IN_PROGRESS       AWS::ApiGateway::Stage   Stage                    Resource creation      
+                                                                           Initiated              
+CREATE_COMPLETE          AWS::ApiGateway::Stage   Stage                    -                      
+CREATE_COMPLETE          AWS::Lambda::Permissio   TokenAuthorizerPythonF   -                      
+                         n                        unctionPermission                               
+CREATE_COMPLETE          AWS::Lambda::Permissio   RequestAuthorizerGoFun   -                      
+                         n                        ctionPermission                                 
+CREATE_COMPLETE          AWS::Lambda::Permissio   RequestAuthorizerPytho   -                      
+                         n                        nFunctionPermission                             
+CREATE_COMPLETE          AWS::Lambda::Permissio   RequestAuthorizerNodeF   -                      
+                         n                        unctionPermission                               
+CREATE_COMPLETE          AWS::Lambda::Permissio   TokenAuthorizerNodeFun   -                      
+                         n                        ctionPermission                                 
+CREATE_COMPLETE          AWS::Lambda::Permissio   TokenAuthorizerGoFunct   -                      
+                         n                        ionPermission                                   
+CREATE_COMPLETE          AWS::CloudFormation::S   lambda-authorizer-       -                      
+                         tack                     benchmarking-tool                               
+-------------------------------------------------------------------------------------------------
+CloudFormation outputs from deployed stack
+-------------------------------------------------------------------------------------------------
+Outputs                                                                                         
+-------------------------------------------------------------------------------------------------
+Key                 requestAuthorizerGo                                                         
+Description         Request Authorizer Node Get Endpoint                                        
+Value               https://n126gvmc14.execute-api.eu-west-1.amazonaws.com/v1/req-auth-         
+go?QueryString1=queryValue1                                                                     
+
+Key                 tokenAuthorizerGo                                                           
+Description         Token Authorizer Go Get Endpoint                                            
+Value               https://n126gvmc14.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-go -H    
+"AuthorizationToken: Bearer allow"                                                              
+
+Key                 requestAuthorizerPython                                                     
+Description         Request Authorizer Python Get Endpoint                                      
+Value               https://n126gvmc14.execute-api.eu-west-1.amazonaws.com/v1/req-auth-         
+python?QueryString1=queryValue1                                                                 
+
+Key                 requestAuthorizerNode                                                       
+Description         Request Authorizer Node Get Endpoint                                        
+Value               https://n126gvmc14.execute-api.eu-west-1.amazonaws.com/v1/req-auth-         
+node?QueryString1=queryValue1                                                                   
+
+Key                 tokenAuthorizerNode                                                         
+Description         Token Authorizer Node Get Endpoint                                          
+Value               https://n126gvmc14.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-node -H  
+"AuthorizationToken: Bearer allow"                                                              
+
+Key                 tokenAuthorizerPython                                                       
+Description         Token Authorizer Python Get Endpoint                                        
+Value               https://n126gvmc14.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-python   
+-H "AuthorizationToken: Bearer allow"                                                           
+-------------------------------------------------------------------------------------------------
+
+Successfully created/updated stack - lambda-authorizer-benchmarking-tool in eu-west-1
+

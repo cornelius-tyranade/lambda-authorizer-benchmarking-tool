@@ -609,21 +609,21 @@ Resources:
 
 Outputs:
   # API Gateway endpoint to be used during performance tests
-  RequestAuthorizerPythonGetEndPoint:
-    Description: !GetAtt RequestAuthorizerPythonFunction.FunctionName
+  requestAuthorizerPython:
+    Description: Request Authorizer Python Get Endpoint
     Value: !Sub "https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/req-auth-python?QueryString1=queryValue1"
-  TokenAuthorizerPythonGetEndPoint:
-    Description: !GetAtt TokenAuthorizerPythonFunction.FunctionName
+  tokenAuthorizerPython:
+    Description: Token Authorizer Python Get Endpoint
     Value: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/tkn-auth-python -H "AuthorizationToken: Bearer allow"'
-  RequestAuthorizerNodeGetEndPoint:
-    Description: !GetAtt RequestAuthorizerNodeFunction.FunctionName
+  requestAuthorizerNode:
+    Description: Request Authorizer Node Get Endpoint
     Value: !Sub "https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/req-auth-node?QueryString1=queryValue1"
-  TokenAuthorizerNodeGetEndPoint:
-    Description: !GetAtt TokenAuthorizerNodeFunction.FunctionName
+  tokenAuthorizerNode:
+    Description: Token Authorizer Node Get Endpoint
     Value: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/tkn-auth-node -H "AuthorizationToken: Bearer allow"'
-  RequestAuthorizerGoGetEndPoint:
-    Description: !GetAtt RequestAuthorizerGoFunction.FunctionName
+  requestAuthorizerGo:
+    Description: Request Authorizer Node Get Endpoint
     Value: !Sub "https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/req-auth-go?QueryString1=queryValue1"
-  TokenAuthorizerGoGetEndPoint:
-    Description: !GetAtt TokenAuthorizerGoFunction.FunctionName
+  tokenAuthorizerGo:
+    Description: Token Authorizer Go Get Endpoint
     Value: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/tkn-auth-go -H "AuthorizationToken: Bearer allow"'

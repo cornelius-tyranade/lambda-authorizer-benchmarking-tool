@@ -1,1 +1,0 @@
-console.log('Tara Supremacy')

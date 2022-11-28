@@ -1,0 +1,3 @@
+	- Deleting Cloudformation stack lambda-authorizer-benchmarking-tool
+
+Deleted successfully
