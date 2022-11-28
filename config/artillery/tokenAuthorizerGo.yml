@@ -1,0 +1,16 @@
+config:
+  target: https://n126gvmc14.execute-api.eu-west-1.amazonaws.com/v1/
+  phases:
+    - duration: 10
+      arrivalRate: 10
+      name: benchmarking
+
+scenarios:
+  - name: tokenAuthorizerGo
+    flow:
+      - get:
+          url: /tkn-auth-go
+          headers:
+            AuthorizationToken: "Bearer allow"
+          expect:
+            - statusCode: 200

@@ -1,0 +1,238 @@
+{
+    "results": [
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerGo"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "coldStarts",
+                "value": "3"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "186.84"
+            },
+            {
+                "field": "minDuration",
+                "value": "2.19"
+            },
+            {
+                "field": "maxDuration",
+                "value": "15.89"
+            },
+            {
+                "field": "smallestMemoryRequestMB",
+                "value": "27.6566"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "28.6102"
+            },
+            {
+                "field": "overProvisionedMB",
+                "value": "93.4601"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerNode"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "coldStarts",
+                "value": "3"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "164.29"
+            },
+            {
+                "field": "minDuration",
+                "value": "6.84"
+            },
+            {
+                "field": "maxDuration",
+                "value": "19.68"
+            },
+            {
+                "field": "smallestMemoryRequestMB",
+                "value": "54.3594"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "54.3594"
+            },
+            {
+                "field": "overProvisionedMB",
+                "value": "67.7109"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerPython"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "coldStarts",
+                "value": "3"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "141.86"
+            },
+            {
+                "field": "minDuration",
+                "value": "1.35"
+            },
+            {
+                "field": "maxDuration",
+                "value": "1.75"
+            },
+            {
+                "field": "smallestMemoryRequestMB",
+                "value": "34.3323"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "35.2859"
+            },
+            {
+                "field": "overProvisionedMB",
+                "value": "86.7844"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "tokenAuthorizerGo"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "coldStarts",
+                "value": "3"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "94.06"
+            },
+            {
+                "field": "minDuration",
+                "value": "3.78"
+            },
+            {
+                "field": "maxDuration",
+                "value": "11.37"
+            },
+            {
+                "field": "smallestMemoryRequestMB",
+                "value": "27.6566"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "27.6566"
+            },
+            {
+                "field": "overProvisionedMB",
+                "value": "94.4138"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "tokenAuthorizerNode"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "coldStarts",
+                "value": "3"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "156.98"
+            },
+            {
+                "field": "minDuration",
+                "value": "8.94"
+            },
+            {
+                "field": "maxDuration",
+                "value": "31.05"
+            },
+            {
+                "field": "smallestMemoryRequestMB",
+                "value": "54.3594"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "54.3594"
+            },
+            {
+                "field": "overProvisionedMB",
+                "value": "67.7109"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "tokenAuthorizerPython"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "coldStarts",
+                "value": "3"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "191.91"
+            },
+            {
+                "field": "minDuration",
+                "value": "1.49"
+            },
+            {
+                "field": "maxDuration",
+                "value": "1.9"
+            },
+            {
+                "field": "smallestMemoryRequestMB",
+                "value": "34.3323"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "34.3323"
+            },
+            {
+                "field": "overProvisionedMB",
+                "value": "87.738"
+            }
+        ]
+    ],
+    "statistics": {
+        "recordsMatched": 18.0,
+        "recordsScanned": 1900.0,
+        "bytesScanned": 224875.0
+    },
+    "status": "Complete"
+}

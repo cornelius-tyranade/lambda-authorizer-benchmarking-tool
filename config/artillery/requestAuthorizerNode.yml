@@ -1,0 +1,14 @@
+config:
+  target: https://n126gvmc14.execute-api.eu-west-1.amazonaws.com/v1/
+  phases:
+    - duration: 10
+      arrivalRate: 10
+      name: benchmarking
+
+scenarios:
+  - name: requestAuthorizerNode
+    flow:
+      - get:
+          url: /req-auth-node?QueryString1=queryValue1
+          expect:
+            - statusCode: 200
