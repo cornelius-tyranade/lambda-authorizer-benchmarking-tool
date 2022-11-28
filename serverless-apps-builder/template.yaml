@@ -586,6 +586,102 @@ Resources:
       Principal: apigateway.amazonaws.com
       SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambdaTokenGo}
 
+  ### Lambda Token Authorizer Java
+
+  TokenAuthorizerJavaResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt AppApi.RootResourceId
+      PathPart: "tkn-auth-java"
+      RestApiId: !Ref AppApi
+
+  # GET Method with Lambda authorizer token enabled
+  TokenAuthorizerJavaGet:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref AppApi
+      ResourceId: !Ref TokenAuthorizerJavaResource
+      HttpMethod: GET
+      AuthorizationType: CUSTOM
+      AuthorizerId: !Ref AuthorizersLambdaTokenJava
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Join [
+            "",
+            [
+              "arn:aws:apigateway:",
+              !Ref AWS::Region,
+              ":lambda:path/2015-03-31/functions/",
+              !GetAtt AppTokenAuthorizerJavaFunction.Arn,
+              "/invocations",
+            ],
+          ]
+
+  # Lambda Token Authorizer
+  AuthorizersLambdaTokenJava:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: AuthorizersLambdaTokenJava
+      Type: TOKEN
+      RestApiId: !Ref AppApi
+      IdentitySource: method.request.header.authorizationToken
+      AuthorizerResultTtlInSeconds: 0
+      AuthorizerUri:
+        !Join [
+          "",
+          [
+            "arn:aws:apigateway:",
+            !Ref AWS::Region,
+            ":lambda:path/2015-03-31/functions/",
+            !GetAtt TokenAuthorizerJavaFunction.Arn,
+            "/invocations",
+          ],
+        ]
+
+  # AppTokenAuthorizerJava function
+  AppTokenAuthorizerJavaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: appTokenAuthorizerJava
+      Description: Token Authorizer Java Application
+      Runtime: java11
+      CodeUri: scenarios/java/
+      Handler: functions.AppTokenAuthorizer::handleRequest
+      MemorySize: 128
+      Timeout: 3
+
+  # tokenAuthorizerJava function
+  TokenAuthorizerJavaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: tokenAuthorizerJava
+      Description: Token Authorizer Java
+      Runtime: java11
+      CodeUri: scenarios/java/
+      Handler: authorizers.TokenAuthorizer::handleRequest
+      MemorySize: 128
+      Timeout: 3
+
+  # Permission to allow AppTokenAuthorizerJavaFunction invocation from API Gateway
+  AppTokenAuthorizerJavaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AppTokenAuthorizerJavaFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/*/GET/tkn-auth-java
+
+  # Permission to allow TokenAuthorizerJavaFunction invocation from API Gateway
+  TokenAuthorizerJavaFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref TokenAuthorizerJavaFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambdaTokenJava}
+
   ### Deployment and Output Setup
 
   Deployment:
@@ -597,6 +693,7 @@ Resources:
       - TokenAuthorizerNodeGet
       - RequestAuthorizerGoGet
       - TokenAuthorizerGoGet
+      - TokenAuthorizerJavaGet
     Properties:
       RestApiId: !Ref AppApi
 
@@ -627,3 +724,6 @@ Outputs:
   tokenAuthorizerGo:
     Description: Token Authorizer Go Get Endpoint
     Value: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/tkn-auth-go -H "AuthorizationToken: Bearer allow"'
+  tokenAuthorizerJava:
+    Description: Token Authorizer Java Get Endpoint
+    Value: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/tkn-auth-java -H "AuthorizationToken: Bearer allow"'
