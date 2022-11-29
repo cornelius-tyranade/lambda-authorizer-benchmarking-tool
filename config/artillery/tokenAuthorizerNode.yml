@@ -1,5 +1,5 @@
 config:
-  target: https://n126gvmc14.execute-api.eu-west-1.amazonaws.com/v1/
+  target: https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/
   phases:
     - duration: 10
       arrivalRate: 10

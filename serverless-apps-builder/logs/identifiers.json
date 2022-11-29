@@ -4,5 +4,7 @@
     "requestAuthorizerPython",
     "requestAuthorizerNode",
     "tokenAuthorizerNode",
-    "tokenAuthorizerPython"
+    "requestAuthorizerJava",
+    "tokenAuthorizerPython",
+    "tokenAuthorizerJava"
 ]

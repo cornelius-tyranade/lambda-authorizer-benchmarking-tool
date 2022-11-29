@@ -586,6 +586,102 @@ Resources:
       Principal: apigateway.amazonaws.com
       SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambdaTokenGo}
 
+  ### Lambda Request Authorizer Java
+
+  RequestAuthorizerJavaResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt AppApi.RootResourceId
+      PathPart: "req-auth-java"
+      RestApiId: !Ref AppApi
+
+  # GET Method with Lambda authorizer request enabled
+  RequestAuthorizerJavaGet:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref AppApi
+      ResourceId: !Ref RequestAuthorizerJavaResource
+      HttpMethod: GET
+      AuthorizationType: CUSTOM
+      AuthorizerId: !Ref AuthorizersLambdaRequestJava
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri:
+          !Join [
+            "",
+            [
+              "arn:aws:apigateway:",
+              !Ref AWS::Region,
+              ":lambda:path/2015-03-31/functions/",
+              !GetAtt AppRequestAuthorizerJavaFunction.Arn,
+              "/invocations",
+            ],
+          ]
+
+  # Lambda Request Authorizer
+  AuthorizersLambdaRequestJava:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: AuthorizersLambdaRequestJava
+      Type: REQUEST
+      RestApiId: !Ref AppApi
+      IdentitySource: method.request.querystring.QueryString1
+      AuthorizerResultTtlInSeconds: 0
+      AuthorizerUri:
+        !Join [
+          "",
+          [
+            "arn:aws:apigateway:",
+            !Ref AWS::Region,
+            ":lambda:path/2015-03-31/functions/",
+            !GetAtt RequestAuthorizerJavaFunction.Arn,
+            "/invocations",
+          ],
+        ]
+
+  # AppRequestAuthorizerJava function
+  AppRequestAuthorizerJavaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: appRequestAuthorizerJava
+      Description: Request Authorizer Java Application
+      Runtime: java11
+      CodeUri: scenarios/java/
+      Handler: functions.AppRequestAuthorizer::handleRequest
+      MemorySize: 128
+      Timeout: 3
+
+  # requestAuthorizerJava function
+  RequestAuthorizerJavaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: requestAuthorizerJava
+      Description: Request Authorizer Java
+      Runtime: java11
+      CodeUri: scenarios/java/
+      Handler: authorizers.RequestAuthorizer::handleRequest
+      MemorySize: 128
+      Timeout: 3
+
+  # Permission to allow AppRequestAuthorizerJavaFunction invocation from API Gateway
+  AppRequestAuthorizerJavaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AppRequestAuthorizerJavaFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/*/GET/req-auth-java
+
+  # Permission to allow RequestAuthorizerJavaFunction invocation from API Gateway
+  RequestAuthorizerJavaFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref RequestAuthorizerJavaFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambdaRequestJava}
+
   ### Lambda Token Authorizer Java
 
   TokenAuthorizerJavaResource:
@@ -693,6 +789,7 @@ Resources:
       - TokenAuthorizerNodeGet
       - RequestAuthorizerGoGet
       - TokenAuthorizerGoGet
+      - RequestAuthorizerJavaGet
       - TokenAuthorizerJavaGet
     Properties:
       RestApiId: !Ref AppApi
@@ -724,6 +821,9 @@ Outputs:
   tokenAuthorizerGo:
     Description: Token Authorizer Go Get Endpoint
     Value: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/tkn-auth-go -H "AuthorizationToken: Bearer allow"'
+  requestAuthorizerJava:
+    Description: Request Authorizer Java Get Endpoint
+    Value: !Sub "https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/req-auth-java?QueryString1=queryValue1"
   tokenAuthorizerJava:
     Description: Token Authorizer Java Get Endpoint
     Value: !Sub 'https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/tkn-auth-java -H "AuthorizationToken: Bearer allow"'

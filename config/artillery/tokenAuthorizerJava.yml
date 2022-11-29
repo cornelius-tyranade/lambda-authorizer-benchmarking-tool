@@ -6,9 +6,11 @@ config:
       name: benchmarking
 
 scenarios:
-  - name: requestAuthorizerGo
+  - name: tokenAuthorizerJava
     flow:
       - get:
-          url: /req-auth-go?QueryString1=queryValue1
+          url: /tkn-auth-java
+          headers:
+            AuthorizationToken: "Bearer allow"
           expect:
             - statusCode: 200

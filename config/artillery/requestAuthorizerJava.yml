@@ -6,9 +6,9 @@ config:
       name: benchmarking
 
 scenarios:
-  - name: requestAuthorizerGo
+  - name: requestAuthorizerJava
     flow:
       - get:
-          url: /req-auth-go?QueryString1=queryValue1
+          url: /req-auth-java?QueryString1=queryValue1
           expect:
             - statusCode: 200

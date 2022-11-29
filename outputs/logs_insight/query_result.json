@@ -15,15 +15,15 @@
             },
             {
                 "field": "maxInitDuration",
-                "value": "186.84"
+                "value": "255.78"
             },
             {
                 "field": "minDuration",
-                "value": "2.19"
+                "value": "7.48"
             },
             {
                 "field": "maxDuration",
-                "value": "15.89"
+                "value": "8.27"
             },
             {
                 "field": "smallestMemoryRequestMB",
@@ -41,6 +41,44 @@
         [
             {
                 "field": "functionName",
+                "value": "requestAuthorizerJava"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "coldStarts",
+                "value": "11"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "608.47"
+            },
+            {
+                "field": "minDuration",
+                "value": "244.3"
+            },
+            {
+                "field": "maxDuration",
+                "value": "334.72"
+            },
+            {
+                "field": "smallestMemoryRequestMB",
+                "value": "82.9697"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "83.9233"
+            },
+            {
+                "field": "overProvisionedMB",
+                "value": "38.147"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
                 "value": "requestAuthorizerNode"
             },
             {
@@ -53,15 +91,15 @@
             },
             {
                 "field": "maxInitDuration",
-                "value": "164.29"
+                "value": "223.68"
             },
             {
                 "field": "minDuration",
-                "value": "6.84"
+                "value": "10.43"
             },
             {
                 "field": "maxDuration",
-                "value": "19.68"
+                "value": "14.14"
             },
             {
                 "field": "smallestMemoryRequestMB",
@@ -69,11 +107,11 @@
             },
             {
                 "field": "maxMemoryUsedMB",
-                "value": "54.3594"
+                "value": "55.3131"
             },
             {
                 "field": "overProvisionedMB",
-                "value": "67.7109"
+                "value": "66.7572"
             }
         ],
         [
@@ -91,15 +129,15 @@
             },
             {
                 "field": "maxInitDuration",
-                "value": "141.86"
+                "value": "131.03"
             },
             {
                 "field": "minDuration",
-                "value": "1.35"
+                "value": "1.6"
             },
             {
                 "field": "maxDuration",
-                "value": "1.75"
+                "value": "1.85"
             },
             {
                 "field": "smallestMemoryRequestMB",
@@ -107,11 +145,11 @@
             },
             {
                 "field": "maxMemoryUsedMB",
-                "value": "35.2859"
+                "value": "34.3323"
             },
             {
                 "field": "overProvisionedMB",
-                "value": "86.7844"
+                "value": "87.738"
             }
         ],
         [
@@ -129,15 +167,15 @@
             },
             {
                 "field": "maxInitDuration",
-                "value": "94.06"
+                "value": "85.51"
             },
             {
                 "field": "minDuration",
-                "value": "3.78"
+                "value": "1.96"
             },
             {
                 "field": "maxDuration",
-                "value": "11.37"
+                "value": "17.31"
             },
             {
                 "field": "smallestMemoryRequestMB",
@@ -155,6 +193,44 @@
         [
             {
                 "field": "functionName",
+                "value": "tokenAuthorizerJava"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "coldStarts",
+                "value": "64"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "584.48"
+            },
+            {
+                "field": "minDuration",
+                "value": "395.04"
+            },
+            {
+                "field": "maxDuration",
+                "value": "577.48"
+            },
+            {
+                "field": "smallestMemoryRequestMB",
+                "value": "77.2476"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "78.2013"
+            },
+            {
+                "field": "overProvisionedMB",
+                "value": "43.869"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
                 "value": "tokenAuthorizerNode"
             },
             {
@@ -167,15 +243,15 @@
             },
             {
                 "field": "maxInitDuration",
-                "value": "156.98"
+                "value": "165.6"
             },
             {
                 "field": "minDuration",
-                "value": "8.94"
+                "value": "4.65"
             },
             {
                 "field": "maxDuration",
-                "value": "31.05"
+                "value": "19.99"
             },
             {
                 "field": "smallestMemoryRequestMB",
@@ -201,19 +277,19 @@
             },
             {
                 "field": "coldStarts",
-                "value": "3"
+                "value": "5"
             },
             {
                 "field": "maxInitDuration",
-                "value": "191.91"
+                "value": "116.82"
             },
             {
                 "field": "minDuration",
-                "value": "1.49"
+                "value": "1.27"
             },
             {
                 "field": "maxDuration",
-                "value": "1.9"
+                "value": "1.82"
             },
             {
                 "field": "smallestMemoryRequestMB",
@@ -230,9 +306,9 @@
         ]
     ],
     "statistics": {
-        "recordsMatched": 18.0,
-        "recordsScanned": 1900.0,
-        "bytesScanned": 224875.0
+        "recordsMatched": 95.0,
+        "recordsScanned": 61960.0,
+        "bytesScanned": 7341711.0
     },
     "status": "Complete"
 }

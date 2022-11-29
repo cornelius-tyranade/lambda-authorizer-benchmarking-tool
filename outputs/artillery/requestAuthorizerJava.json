@@ -1,0 +1,169 @@
+{
+  "aggregate": {
+    "counters": {
+      "vusers.created_by_name.requestAuthorizerJava": 100,
+      "vusers.created": 100,
+      "http.requests": 100,
+      "http.codes.200": 100,
+      "http.responses": 100,
+      "vusers.failed": 0,
+      "vusers.completed": 100
+    },
+    "rates": {
+      "http.request_rate": 13
+    },
+    "firstCounterAt": 1669747638453,
+    "firstHistogramAt": 1669747640684,
+    "lastCounterAt": 1669747648373,
+    "lastHistogramAt": 1669747648373,
+    "firstMetricAt": 1669747638453,
+    "lastMetricAt": 1669747648373,
+    "period": 1669747640000,
+    "summaries": {
+      "http.response_time": {
+        "min": 54,
+        "max": 2271,
+        "count": 100,
+        "p50": 83.9,
+        "median": 83.9,
+        "p75": 399.5,
+        "p90": 1826.6,
+        "p95": 2018.7,
+        "p99": 2231,
+        "p999": 2231
+      },
+      "vusers.session_length": {
+        "min": 97.2,
+        "max": 2350.5,
+        "count": 100,
+        "p50": 127.8,
+        "median": 127.8,
+        "p75": 441.5,
+        "p90": 1901.1,
+        "p95": 2059.5,
+        "p99": 2276.1,
+        "p999": 2276.1
+      }
+    },
+    "histograms": {
+      "http.response_time": {
+        "min": 54,
+        "max": 2271,
+        "count": 100,
+        "p50": 83.9,
+        "median": 83.9,
+        "p75": 399.5,
+        "p90": 1826.6,
+        "p95": 2018.7,
+        "p99": 2231,
+        "p999": 2231
+      },
+      "vusers.session_length": {
+        "min": 97.2,
+        "max": 2350.5,
+        "count": 100,
+        "p50": 127.8,
+        "median": 127.8,
+        "p75": 441.5,
+        "p90": 1901.1,
+        "p95": 2059.5,
+        "p99": 2276.1,
+        "p999": 2276.1
+      }
+    }
+  },
+  "intermediate": [
+    {
+      "counters": {
+        "vusers.created_by_name.requestAuthorizerJava": 14,
+        "vusers.created": 14,
+        "http.requests": 14
+      },
+      "rates": {
+        "http.request_rate": 13
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1669747638453,
+      "lastCounterAt": 1669747639955,
+      "firstMetricAt": 1669747638453,
+      "lastMetricAt": 1669747639955,
+      "period": "1669747630000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.requestAuthorizerJava": 86,
+        "vusers.created": 86,
+        "http.requests": 86,
+        "http.codes.200": 100,
+        "http.responses": 100,
+        "vusers.failed": 0,
+        "vusers.completed": 100
+      },
+      "rates": {
+        "http.request_rate": 10
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1669747640003,
+      "firstHistogramAt": 1669747640684,
+      "lastCounterAt": 1669747648373,
+      "lastHistogramAt": 1669747648373,
+      "firstMetricAt": 1669747640003,
+      "lastMetricAt": 1669747648373,
+      "period": "1669747640000",
+      "summaries": {
+        "http.response_time": {
+          "min": 54,
+          "max": 2271,
+          "count": 100,
+          "p50": 83.9,
+          "median": 83.9,
+          "p75": 399.5,
+          "p90": 1826.6,
+          "p95": 2018.7,
+          "p99": 2231,
+          "p999": 2231
+        },
+        "vusers.session_length": {
+          "min": 97.2,
+          "max": 2350.5,
+          "count": 100,
+          "p50": 127.8,
+          "median": 127.8,
+          "p75": 441.5,
+          "p90": 1901.1,
+          "p95": 2059.5,
+          "p99": 2276.1,
+          "p999": 2276.1
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 54,
+          "max": 2271,
+          "count": 100,
+          "p50": 83.9,
+          "median": 83.9,
+          "p75": 399.5,
+          "p90": 1826.6,
+          "p95": 2018.7,
+          "p99": 2231,
+          "p999": 2231
+        },
+        "vusers.session_length": {
+          "min": 97.2,
+          "max": 2350.5,
+          "count": 100,
+          "p50": 127.8,
+          "median": 127.8,
+          "p75": 441.5,
+          "p90": 1901.1,
+          "p95": 2059.5,
+          "p99": 2276.1,
+          "p999": 2276.1
+        }
+      }
+    }
+  ]
+}
