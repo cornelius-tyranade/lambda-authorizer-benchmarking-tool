@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node command.js"
   },
-  "author": "Cornelius - 21126747",
+  "author": "Cornelius",
   "license": "ISC",
   "dependencies": {
     "artillery": "^2.0.0-27",
