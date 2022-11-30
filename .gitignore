@@ -1,2 +1,3 @@
 serverless-apps-builder/.aws-sam
 node_modules
+.DS_Store

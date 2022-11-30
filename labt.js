@@ -29,9 +29,9 @@ program.parse(process.argv);
 const options = program.opts();
 
 // Check required system application
-checkSystemApplication('aws', 'AWS CLI is required for this script.')
-checkSystemApplication('sam', 'AWS SAM is required for this script.')
-checkSystemApplication('artillery', 'Artillery Framework is required for this script.')
+checkSystemApplication('aws', 'AWS CLI is required for this script.');
+checkSystemApplication('sam', 'AWS SAM is required for this script.');
+checkSystemApplication('artillery', 'Artillery Framework is required for this script.');
 
 // Option clean
 doOptionClean(options.clean);
@@ -90,7 +90,7 @@ function doOptionDeploy(isDeploy) {
 
 function doOptionTest(inputParam) {
     if (inputParam) {
-        let { urlsJson, identifiersJson } = getUrlsAndIdentifiersJSON(inputParam);;
+        let { urlsJson, identifiersJson } = getUrlsAndIdentifiersJSON(inputParam);
         copyArtilleryTemplate(urlsJson, identifiersJson);
         replaceArtilleryTemplate(urlsJson, identifiersJson);
         runArtilleryTest(urlsJson, identifiersJson);
@@ -129,7 +129,7 @@ function getUrlsAndIdentifiersJSON(inputParam) {
     return {
         'urlsJson': urlsJson,
         'identifiersJson': identifiersJson
-    }
+    };
 }
 
 function isIterable(object) {
@@ -198,13 +198,13 @@ function replaceStringInFiles(destinationFile, fromValue, toValue) {
 function runArtilleryTest(urls, identifiers) {
     for (let i = 0; i < urls.length; i++) {
         let identifier = identifiers[i];
-        executeShell('artillery run config/artillery/' + identifier + '.yml --output outputs/artillery/' + identifier + '.json', 'Error: Artillery performance test failed')
+        executeShell('artillery run config/artillery/' + identifier + '.yml --output outputs/artillery/' + identifier + '.json', 'Error: Artillery performance test failed');
     }
 }
 
 function doOptionReport(inputParam) {
     if (inputParam) {
-        let { urlsJson, identifiersJson } = getUrlsAndIdentifiersJSON(inputParam);;
+        let { urlsJson, identifiersJson } = getUrlsAndIdentifiersJSON(inputParam);
         runArtilleryReport(urlsJson, identifiersJson);
     }
 }
@@ -218,7 +218,7 @@ function runArtilleryReport(urls, identifiers) {
 
 function doOptionLogsInsight(inputParam) {
     if (inputParam) {
-        let { identifiersJson } = getUrlsAndIdentifiersJSON(inputParam);;
+        let { identifiersJson } = getUrlsAndIdentifiersJSON(inputParam);
         runAwsCloudWatchLogsInsight(identifiersJson);
     }
 }
@@ -375,16 +375,19 @@ function runAwsCloudWatchLogsInsight(identifiers) {
         ' | sort functionName\'' +
         ' > outputs/logs_insight/query_id_tkn_max_memory_used.json';
 
-    executeLogsInsight(commandQueryOverview, 'AWS CloudWatch logs insight overview query failed', "Waiting query result..", "overview.json");
-    executeLogsInsight(commandQueryRequestMaxInitDuration, 'AWS CloudWatch logs insight request max init duration query failed', "Waiting query result..", "req_max_init_duration.json");
-    executeLogsInsight(commandQueryRequestMaxDuration, 'AWS CloudWatch logs insight request max duration query failed', "Waiting query result..", "req_max_duration.json");
-    executeLogsInsight(commandQueryRequestMaxMemoryUsed, 'AWS CloudWatch logs insight request max memory used query failed', "Waiting query result..", "req_max_memory_used.json");
-    executeLogsInsight(commandQueryTokenMaxInitDuration, 'AWS CloudWatch logs insight token max init duration query failed', "Waiting query result..", "tkn_max_init_duration.json");
-    executeLogsInsight(commandQueryTokenMaxDuration, 'AWS CloudWatch logs insight token max duration query failed', "Waiting query result..", "tkn_max_duration.json");
-    executeLogsInsight(commandQueryTokenMaxMemoryUsed, 'AWS CloudWatch logs insight token max memory used query failed', "Waiting query result..", "tkn_max_memory_used.json");
+    executeLogsInsight(identifierParams !== '' ? commandQueryOverview : '', 'AWS CloudWatch logs insight overview query failed', "Waiting overview query result..", "overview.json");
+    executeLogsInsight(identifierRequestParams !== '' ? commandQueryRequestMaxInitDuration : '', 'AWS CloudWatch logs insight request max init duration query failed', "Waiting request max init duration query result..", "req_max_init_duration.json");
+    executeLogsInsight(identifierRequestParams !== '' ? commandQueryRequestMaxDuration : '', 'AWS CloudWatch logs insight request max duration query failed', "Waiting request max duration query result..", "req_max_duration.json");
+    executeLogsInsight(identifierRequestParams !== '' ? commandQueryRequestMaxMemoryUsed : '', 'AWS CloudWatch logs insight request max memory used query failed', "Waiting request max memory used query result..", "req_max_memory_used.json");
+    executeLogsInsight(identifierTokenParams !== '' ? commandQueryTokenMaxInitDuration : '', 'AWS CloudWatch logs insight token max init duration query failed', "Waiting token max init duration query result..", "tkn_max_init_duration.json");
+    executeLogsInsight(identifierTokenParams !== '' ? commandQueryTokenMaxDuration : '', 'AWS CloudWatch logs insight token max duration query failed', "Waiting token max duration query result..", "tkn_max_duration.json");
+    executeLogsInsight(identifierTokenParams !== '' ? commandQueryTokenMaxMemoryUsed : '', 'AWS CloudWatch logs insight token max memory used query failed', "Waiting token max memory used query result..", "tkn_max_memory_used.json");
 }
 
 function executeLogsInsight(commandQuery, messageCommand, messageDelay, path) {
+    if (commandQuery === '') {
+        return;
+    }
     executeShell(commandQuery, messageCommand);
     delayProgress(waitTimeQuery, messageDelay);
     getLogsInsightResult(path);
@@ -412,4 +415,3 @@ function delayProgress(seconds, message) {
         execSync("sleep 1");
     }
 }
-
