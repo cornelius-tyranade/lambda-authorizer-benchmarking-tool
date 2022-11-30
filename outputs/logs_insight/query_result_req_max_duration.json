@@ -1,0 +1,66 @@
+{
+    "results": [
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerGo"
+            },
+            {
+                "field": "minDuration",
+                "value": "7.48"
+            },
+            {
+                "field": "maxDuration",
+                "value": "8.27"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerJava"
+            },
+            {
+                "field": "minDuration",
+                "value": "244.3"
+            },
+            {
+                "field": "maxDuration",
+                "value": "358.61"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerNode"
+            },
+            {
+                "field": "minDuration",
+                "value": "10.43"
+            },
+            {
+                "field": "maxDuration",
+                "value": "14.14"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerPython"
+            },
+            {
+                "field": "minDuration",
+                "value": "1.6"
+            },
+            {
+                "field": "maxDuration",
+                "value": "1.85"
+            }
+        ]
+    ],
+    "statistics": {
+        "recordsMatched": 92.0,
+        "recordsScanned": 121080.0,
+        "bytesScanned": 14352044.0
+    },
+    "status": "Complete"
+}

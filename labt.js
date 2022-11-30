@@ -4,6 +4,7 @@ const fs = require("fs");
 const config = require('config');
 const replace = require('replace-in-file');
 const shell = require('shelljs');
+const commandExists = require('command-exists-promise');
 
 // Global const
 const program = new Command();
@@ -54,10 +55,15 @@ doOptionLogsInsight(options.logsInsight);
 */
 
 function checkSystemApplication(appName, errorMessage) {
-    if (!shell.which(appName)) {
+    commandExists(appName).then(exists => {
+        if (!exists) {
+            shell.echo(errorMessage);
+            shell.exit(1);
+        }
+    }).catch(err => {
         shell.echo(errorMessage);
         shell.exit(1);
-    }
+    })
 }
 
 function executeShell(command, errorMessage) {
@@ -218,15 +224,25 @@ function doOptionLogsInsight(inputParam) {
 }
 
 function runAwsCloudWatchLogsInsight(identifiers) {
-    let identifierParams = ''
-    let startTime = Math.floor(subtractMinutes(logsInsightTimeRange).getTime() / 1000)
-    let endTime = Math.floor(new Date().getTime() / 1000)
+    let identifierParams = '';
+    let identifierTokenParams = '';
+    let identifierRequestParams = '';
+    let startTime = Math.floor(subtractMinutes(logsInsightTimeRange).getTime() / 1000);
+    let endTime = Math.floor(new Date().getTime() / 1000);
 
     for (let i = 0; i < identifiers.length; i++) {
         let identifier = identifiers[i];
         identifierParams += "\"/aws/lambda/" + identifier + "\" ";
+
+        if (identifier.startsWith('request')) {
+            identifierRequestParams += "\"/aws/lambda/" + identifier + "\" ";
+        }
+
+        if (identifier.startsWith('token')) {
+            identifierTokenParams += "\"/aws/lambda/" + identifier + "\" ";
+        }
     }
-    let commandQuery = 'aws logs start-query ' +
+    let commandQueryOverview = 'aws logs start-query ' +
         '--log-group-names ' + identifierParams +
         ' --start-time ' + startTime +
         ' --end-time ' + endTime +
@@ -237,17 +253,152 @@ function runAwsCloudWatchLogsInsight(identifiers) {
         ' | parse @message /^REPORT.*Max Memory Used: (?<maxMemoryUsed>.*) MB*/' +
         ' | parse @message /^REPORT.*Duration: (?<duration>.*) MB*/' +
         ' | parse @log /^.*\\/aws\\/lambda\\/(?<functionName>.*)/' +
-        ' | stats count() as coldStarts, avg(initDuration) as avgInitDuration, max(initDuration) as maxInitDuration,' +
-        ' min(@duration) as minDuration, max(@duration) as maxDuration, min(@maxMemoryUsed / 1024 / 1024) as smallestMemoryRequestMB,' +
-        ' avg(@maxMemoryUsed / 1024 / 1024) as avgMemoryUsedMB, max(@maxMemoryUsed / 1024 / 1024) as maxMemoryUsedMB,' +
-        ' provisonedMemoryMB - maxMemoryUsedMB as overProvisionedMB by functionName, memorySize, provisonedMemoryMB' +
-        ' | display functionName, memorySize, coldStarts, maxInitDuration, minDuration, maxDuration, smallestMemoryRequestMB, maxMemoryUsedMB, overProvisionedMB' +
+        ' | stats count() as coldStarts, min(initDuration) as minInitDuration, max(initDuration) as maxInitDuration,' +
+        ' min(@duration) as minDuration, max(@duration) as maxDuration, ' +
+        ' min(@maxMemoryUsed / 1024 / 1024) as minMemoryUsedMB, max(@maxMemoryUsed / 1024 / 1024) as maxMemoryUsedMB,' +
+        ' provisonedMemoryMB - maxMemoryUsedMB as overProvisionedMemoryMB by functionName, memorySize, provisonedMemoryMB' +
+        ' | display functionName, memorySize, coldStarts, minInitDuration, maxInitDuration, minDuration, maxDuration, minMemoryUsedMB, maxMemoryUsedMB, overProvisionedMemoryMB' +
         ' | sort functionName\'' +
-        ' > outputs/logs_insight/query_id.json';
+        ' > outputs/logs_insight/query_id_overview.json';
 
-    executeShell(commandQuery, 'AWS CloudWatch logs insight run query failed');
-    delayProgress(waitTimeQuery, "Waiting query result..");
-    getLogsInsightResult();
+    let commandQueryRequestMaxInitDuration = 'aws logs start-query ' +
+        '--log-group-names ' + identifierRequestParams +
+        ' --start-time ' + startTime +
+        ' --end-time ' + endTime +
+        ' --query-string \'filter @type=\"REPORT\"' +
+        ' | fields @memorySize / 1000000 as memorySize, @memorySize / 1024 / 1024 as provisonedMemoryMB' +
+        ' | filter @message like /(?i)(Init Duration)/' +
+        ' | parse @message /^REPORT.*Init Duration: (?<initDuration>.*) ms.*/' +
+        ' | parse @message /^REPORT.*Max Memory Used: (?<maxMemoryUsed>.*) MB*/' +
+        ' | parse @message /^REPORT.*Duration: (?<duration>.*) MB*/' +
+        ' | parse @log /^.*\\/aws\\/lambda\\/(?<functionName>.*)/' +
+        ' | stats count() as coldStarts, min(initDuration) as minInitDuration, max(initDuration) as maxInitDuration,' +
+        ' min(@duration) as minDuration, max(@duration) as maxDuration, ' +
+        ' min(@maxMemoryUsed / 1024 / 1024) as minMemoryUsedMB, max(@maxMemoryUsed / 1024 / 1024) as maxMemoryUsedMB,' +
+        ' provisonedMemoryMB - maxMemoryUsedMB as overProvisionedMemoryMB by functionName, memorySize, provisonedMemoryMB' +
+        ' | display functionName, coldStarts, minInitDuration, maxInitDuration' +
+        ' | sort functionName\'' +
+        ' > outputs/logs_insight/query_id_req_max_init_duration.json';
+
+    let commandQueryRequestMaxDuration = 'aws logs start-query ' +
+        '--log-group-names ' + identifierRequestParams +
+        ' --start-time ' + startTime +
+        ' --end-time ' + endTime +
+        ' --query-string \'filter @type=\"REPORT\"' +
+        ' | fields @memorySize / 1000000 as memorySize, @memorySize / 1024 / 1024 as provisonedMemoryMB' +
+        ' | filter @message like /(?i)(Init Duration)/' +
+        ' | parse @message /^REPORT.*Init Duration: (?<initDuration>.*) ms.*/' +
+        ' | parse @message /^REPORT.*Max Memory Used: (?<maxMemoryUsed>.*) MB*/' +
+        ' | parse @message /^REPORT.*Duration: (?<duration>.*) MB*/' +
+        ' | parse @log /^.*\\/aws\\/lambda\\/(?<functionName>.*)/' +
+        ' | stats count() as coldStarts, min(initDuration) as minInitDuration, max(initDuration) as maxInitDuration,' +
+        ' min(@duration) as minDuration, max(@duration) as maxDuration, ' +
+        ' min(@maxMemoryUsed / 1024 / 1024) as minMemoryUsedMB, max(@maxMemoryUsed / 1024 / 1024) as maxMemoryUsedMB,' +
+        ' provisonedMemoryMB - maxMemoryUsedMB as overProvisionedMemoryMB by functionName, memorySize, provisonedMemoryMB' +
+        ' | display functionName, minDuration, maxDuration' +
+        ' | sort functionName\'' +
+        ' > outputs/logs_insight/query_id_req_max_duration.json';
+
+    let commandQueryRequestMaxMemoryUsed = 'aws logs start-query ' +
+        '--log-group-names ' + identifierRequestParams +
+        ' --start-time ' + startTime +
+        ' --end-time ' + endTime +
+        ' --query-string \'filter @type=\"REPORT\"' +
+        ' | fields @memorySize / 1000000 as memorySize, @memorySize / 1024 / 1024 as provisonedMemoryMB' +
+        ' | filter @message like /(?i)(Init Duration)/' +
+        ' | parse @message /^REPORT.*Init Duration: (?<initDuration>.*) ms.*/' +
+        ' | parse @message /^REPORT.*Max Memory Used: (?<maxMemoryUsed>.*) MB*/' +
+        ' | parse @message /^REPORT.*Duration: (?<duration>.*) MB*/' +
+        ' | parse @log /^.*\\/aws\\/lambda\\/(?<functionName>.*)/' +
+        ' | stats count() as coldStarts, min(initDuration) as minInitDuration, max(initDuration) as maxInitDuration,' +
+        ' min(@duration) as minDuration, max(@duration) as maxDuration, ' +
+        ' min(@maxMemoryUsed / 1024 / 1024) as minMemoryUsedMB, max(@maxMemoryUsed / 1024 / 1024) as maxMemoryUsedMB,' +
+        ' provisonedMemoryMB - maxMemoryUsedMB as overProvisionedMemoryMB by functionName, memorySize, provisonedMemoryMB' +
+        ' | display functionName, memorySize, minMemoryUsedMB, maxMemoryUsedMB, overProvisionedMemoryMB' +
+        ' | sort functionName\'' +
+        ' > outputs/logs_insight/query_id_req_max_memory_used.json';
+
+    let commandQueryTokenMaxInitDuration = 'aws logs start-query ' +
+        '--log-group-names ' + identifierTokenParams +
+        ' --start-time ' + startTime +
+        ' --end-time ' + endTime +
+        ' --query-string \'filter @type=\"REPORT\"' +
+        ' | fields @memorySize / 1000000 as memorySize, @memorySize / 1024 / 1024 as provisonedMemoryMB' +
+        ' | filter @message like /(?i)(Init Duration)/' +
+        ' | parse @message /^REPORT.*Init Duration: (?<initDuration>.*) ms.*/' +
+        ' | parse @message /^REPORT.*Max Memory Used: (?<maxMemoryUsed>.*) MB*/' +
+        ' | parse @message /^REPORT.*Duration: (?<duration>.*) MB*/' +
+        ' | parse @log /^.*\\/aws\\/lambda\\/(?<functionName>.*)/' +
+        ' | stats count() as coldStarts, min(initDuration) as minInitDuration, max(initDuration) as maxInitDuration,' +
+        ' min(@duration) as minDuration, max(@duration) as maxDuration, ' +
+        ' min(@maxMemoryUsed / 1024 / 1024) as minMemoryUsedMB, max(@maxMemoryUsed / 1024 / 1024) as maxMemoryUsedMB,' +
+        ' provisonedMemoryMB - maxMemoryUsedMB as overProvisionedMemoryMB by functionName, memorySize, provisonedMemoryMB' +
+        ' | display functionName, coldStarts, minInitDuration, maxInitDuration' +
+        ' | sort functionName\'' +
+        ' > outputs/logs_insight/query_id_tkn_max_init_duration.json';
+
+    let commandQueryTokenMaxDuration = 'aws logs start-query ' +
+        '--log-group-names ' + identifierTokenParams +
+        ' --start-time ' + startTime +
+        ' --end-time ' + endTime +
+        ' --query-string \'filter @type=\"REPORT\"' +
+        ' | fields @memorySize / 1000000 as memorySize, @memorySize / 1024 / 1024 as provisonedMemoryMB' +
+        ' | filter @message like /(?i)(Init Duration)/' +
+        ' | parse @message /^REPORT.*Init Duration: (?<initDuration>.*) ms.*/' +
+        ' | parse @message /^REPORT.*Max Memory Used: (?<maxMemoryUsed>.*) MB*/' +
+        ' | parse @message /^REPORT.*Duration: (?<duration>.*) MB*/' +
+        ' | parse @log /^.*\\/aws\\/lambda\\/(?<functionName>.*)/' +
+        ' | stats count() as coldStarts, min(initDuration) as minInitDuration, max(initDuration) as maxInitDuration,' +
+        ' min(@duration) as minDuration, max(@duration) as maxDuration, ' +
+        ' min(@maxMemoryUsed / 1024 / 1024) as minMemoryUsedMB, max(@maxMemoryUsed / 1024 / 1024) as maxMemoryUsedMB,' +
+        ' provisonedMemoryMB - maxMemoryUsedMB as overProvisionedMemoryMB by functionName, memorySize, provisonedMemoryMB' +
+        ' | display functionName, minDuration, maxDuration' +
+        ' | sort functionName\'' +
+        ' > outputs/logs_insight/query_id_tkn_max_duration.json';
+
+    let commandQueryTokenMaxMemoryUsed = 'aws logs start-query ' +
+        '--log-group-names ' + identifierTokenParams +
+        ' --start-time ' + startTime +
+        ' --end-time ' + endTime +
+        ' --query-string \'filter @type=\"REPORT\"' +
+        ' | fields @memorySize / 1000000 as memorySize, @memorySize / 1024 / 1024 as provisonedMemoryMB' +
+        ' | filter @message like /(?i)(Init Duration)/' +
+        ' | parse @message /^REPORT.*Init Duration: (?<initDuration>.*) ms.*/' +
+        ' | parse @message /^REPORT.*Max Memory Used: (?<maxMemoryUsed>.*) MB*/' +
+        ' | parse @message /^REPORT.*Duration: (?<duration>.*) MB*/' +
+        ' | parse @log /^.*\\/aws\\/lambda\\/(?<functionName>.*)/' +
+        ' | stats count() as coldStarts, min(initDuration) as minInitDuration, max(initDuration) as maxInitDuration,' +
+        ' min(@duration) as minDuration, max(@duration) as maxDuration, ' +
+        ' min(@maxMemoryUsed / 1024 / 1024) as minMemoryUsedMB, max(@maxMemoryUsed / 1024 / 1024) as maxMemoryUsedMB,' +
+        ' provisonedMemoryMB - maxMemoryUsedMB as overProvisionedMemoryMB by functionName, memorySize, provisonedMemoryMB' +
+        ' | display functionName, memorySize, minMemoryUsedMB, maxMemoryUsedMB, overProvisionedMemoryMB' +
+        ' | sort functionName\'' +
+        ' > outputs/logs_insight/query_id_tkn_max_memory_used.json';
+
+    executeLogsInsight(commandQueryOverview, 'AWS CloudWatch logs insight overview query failed', "Waiting query result..", "overview.json");
+    executeLogsInsight(commandQueryRequestMaxInitDuration, 'AWS CloudWatch logs insight request max init duration query failed', "Waiting query result..", "req_max_init_duration.json");
+    executeLogsInsight(commandQueryRequestMaxDuration, 'AWS CloudWatch logs insight request max duration query failed', "Waiting query result..", "req_max_duration.json");
+    executeLogsInsight(commandQueryRequestMaxMemoryUsed, 'AWS CloudWatch logs insight request max memory used query failed', "Waiting query result..", "req_max_memory_used.json");
+    executeLogsInsight(commandQueryTokenMaxInitDuration, 'AWS CloudWatch logs insight token max init duration query failed', "Waiting query result..", "tkn_max_init_duration.json");
+    executeLogsInsight(commandQueryTokenMaxDuration, 'AWS CloudWatch logs insight token max duration query failed', "Waiting query result..", "tkn_max_duration.json");
+    executeLogsInsight(commandQueryTokenMaxMemoryUsed, 'AWS CloudWatch logs insight token max memory used query failed', "Waiting query result..", "tkn_max_memory_used.json");
+}
+
+function executeLogsInsight(commandQuery, messageCommand, messageDelay, path) {
+    executeShell(commandQuery, messageCommand);
+    delayProgress(waitTimeQuery, messageDelay);
+    getLogsInsightResult(path);
+}
+
+function getLogsInsightResult(fileNamePostfix) {
+    try {
+        let queryIdString = fs.readFileSync("outputs/logs_insight/query_id_" + fileNamePostfix);
+        queryIdJson = JSON.parse(queryIdString);
+    } catch (err) {
+        console.error('Error: parse ' + "outputs/logs_insight/query_id" + fileNamePostfix);
+        throw err;
+    }
+    executeShell('aws logs get-query-results --query-id ' + queryIdJson.queryId + ' >  outputs/logs_insight/query_result_' + fileNamePostfix, 'AWS CloudWatch logs insight fetch query result failed');
 }
 
 function subtractMinutes(numOfMinutes, date = new Date()) {
@@ -260,16 +411,5 @@ function delayProgress(seconds, message) {
         console.log(message);
         execSync("sleep 1");
     }
-}
-
-function getLogsInsightResult() {
-    try {
-        let queryIdString = fs.readFileSync("outputs/logs_insight/query_id.json");
-        queryIdJson = JSON.parse(queryIdString);
-    } catch (err) {
-        console.error('Error: parse query_id.json');
-        throw err;
-    }
-    executeShell('aws logs get-query-results --query-id ' + queryIdJson.queryId + ' >  outputs/logs_insight/query_result.json', 'AWS CloudWatch logs insight fetch query result failed');
 }
 

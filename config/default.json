@@ -4,7 +4,7 @@
     "rate": 10
   },
   "logsInsight": {
-    "timeRange": 30,
-    "waitTimeQuery": 10
+    "timeRange": 1440,
+    "waitTimeQuery": 5
   }
 }

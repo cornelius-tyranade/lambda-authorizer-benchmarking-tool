@@ -1,0 +1,82 @@
+{
+    "results": [
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerGo"
+            },
+            {
+                "field": "coldStarts",
+                "value": "3"
+            },
+            {
+                "field": "minInitDuration",
+                "value": "82.96"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "255.78"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerJava"
+            },
+            {
+                "field": "coldStarts",
+                "value": "83"
+            },
+            {
+                "field": "minInitDuration",
+                "value": "466.67"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "739.91"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerNode"
+            },
+            {
+                "field": "coldStarts",
+                "value": "3"
+            },
+            {
+                "field": "minInitDuration",
+                "value": "157.98"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "223.68"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerPython"
+            },
+            {
+                "field": "coldStarts",
+                "value": "3"
+            },
+            {
+                "field": "minInitDuration",
+                "value": "110.04"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "131.03"
+            }
+        ]
+    ],
+    "statistics": {
+        "recordsMatched": 92.0,
+        "recordsScanned": 121080.0,
+        "bytesScanned": 14352044.0
+    },
+    "status": "Complete"
+}

@@ -1,0 +1,66 @@
+{
+    "results": [
+        [
+            {
+                "field": "functionName",
+                "value": "tokenAuthorizerGo"
+            },
+            {
+                "field": "minDuration",
+                "value": "1.96"
+            },
+            {
+                "field": "maxDuration",
+                "value": "17.31"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "tokenAuthorizerJava"
+            },
+            {
+                "field": "minDuration",
+                "value": "395.04"
+            },
+            {
+                "field": "maxDuration",
+                "value": "577.48"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "tokenAuthorizerNode"
+            },
+            {
+                "field": "minDuration",
+                "value": "4.65"
+            },
+            {
+                "field": "maxDuration",
+                "value": "19.99"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "tokenAuthorizerPython"
+            },
+            {
+                "field": "minDuration",
+                "value": "1.27"
+            },
+            {
+                "field": "maxDuration",
+                "value": "1.82"
+            }
+        ]
+    ],
+    "statistics": {
+        "recordsMatched": 75.0,
+        "recordsScanned": 131176.0,
+        "bytesScanned": 15493492.0
+    },
+    "status": "Complete"
+}

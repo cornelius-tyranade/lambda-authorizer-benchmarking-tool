@@ -1,0 +1,82 @@
+{
+    "results": [
+        [
+            {
+                "field": "functionName",
+                "value": "tokenAuthorizerGo"
+            },
+            {
+                "field": "coldStarts",
+                "value": "3"
+            },
+            {
+                "field": "minInitDuration",
+                "value": "77.4"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "85.51"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "tokenAuthorizerJava"
+            },
+            {
+                "field": "coldStarts",
+                "value": "64"
+            },
+            {
+                "field": "minInitDuration",
+                "value": "376.39"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "584.48"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "tokenAuthorizerNode"
+            },
+            {
+                "field": "coldStarts",
+                "value": "3"
+            },
+            {
+                "field": "minInitDuration",
+                "value": "141.87"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "165.6"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "tokenAuthorizerPython"
+            },
+            {
+                "field": "coldStarts",
+                "value": "5"
+            },
+            {
+                "field": "minInitDuration",
+                "value": "102.28"
+            },
+            {
+                "field": "maxInitDuration",
+                "value": "116.82"
+            }
+        ]
+    ],
+    "statistics": {
+        "recordsMatched": 75.0,
+        "recordsScanned": 131176.0,
+        "bytesScanned": 15493492.0
+    },
+    "status": "Complete"
+}

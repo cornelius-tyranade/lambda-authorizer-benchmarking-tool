@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "artillery": "^2.0.0-27",
+    "command-exists-promise": "^2.0.2",
     "commander": "^9.4.1",
     "config": "^3.3.8",
     "replace-in-file": "^6.3.5",

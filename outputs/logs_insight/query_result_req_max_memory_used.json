@@ -1,0 +1,98 @@
+{
+    "results": [
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerGo"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "minMemoryUsedMB",
+                "value": "27.6566"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "28.6102"
+            },
+            {
+                "field": "overProvisionedMemoryMB",
+                "value": "93.4601"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerJava"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "minMemoryUsedMB",
+                "value": "82.9697"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "83.9233"
+            },
+            {
+                "field": "overProvisionedMemoryMB",
+                "value": "38.147"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerNode"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "minMemoryUsedMB",
+                "value": "54.3594"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "55.3131"
+            },
+            {
+                "field": "overProvisionedMemoryMB",
+                "value": "66.7572"
+            }
+        ],
+        [
+            {
+                "field": "functionName",
+                "value": "requestAuthorizerPython"
+            },
+            {
+                "field": "memorySize",
+                "value": "128"
+            },
+            {
+                "field": "minMemoryUsedMB",
+                "value": "34.3323"
+            },
+            {
+                "field": "maxMemoryUsedMB",
+                "value": "34.3323"
+            },
+            {
+                "field": "overProvisionedMemoryMB",
+                "value": "87.738"
+            }
+        ]
+    ],
+    "statistics": {
+        "recordsMatched": 92.0,
+        "recordsScanned": 121080.0,
+        "bytesScanned": 14352044.0
+    },
+    "status": "Complete"
+}
