@@ -160,4 +160,4 @@ $ node labt -c -d -t -r -li
 
 ## License
 
-[Copyright and Related Rights Act, 2000](https://www.irishstatutebook.ie/eli/2000/act/28/enacted/en/html) © Cornelius
+[ISC](LICENSE.md)
