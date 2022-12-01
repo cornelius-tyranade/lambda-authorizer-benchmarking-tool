@@ -160,4 +160,4 @@ $ node labt -c -d -t -r -li
 
 ## License
 
-[ISC](LICENSE.md)
+[Attribution-NonCommercial-ShareAlike 3.0 Ireland](LICENSE.md)
