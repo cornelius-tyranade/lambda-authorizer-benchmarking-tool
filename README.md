@@ -16,7 +16,7 @@ The next step is to install the [AWS CLI](https://docs.aws.amazon.com/cli/latest
 
 ```sh
 $ aws --version && sam --version
-aws-cli/2.8.5 Python/3.10.8 Darwin/22.1.0 source/arm64 prompt/off
+aws-cli/2.8.5
 SAM CLI, version 1.60.0
 ```
 
@@ -25,7 +25,7 @@ In order to use perform benchmarking process, the user must install some other p
 ```sh
 $ python --version && go version
 Python 3.9.14
-go1.19.2 darwin/arm64
+go1.19.2
 
 $ java -version && mvn -version
 openjdk64-11.0.11
