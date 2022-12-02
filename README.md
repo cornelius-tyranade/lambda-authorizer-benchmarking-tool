@@ -156,9 +156,9 @@ $ node labt -d
 
 Upon completion, each scenario's URLs and identifiers are extracted into [urls.json](serverless-apps-builder/logs/urls.json) and [identifiers.json](serverless-apps-builder/logs/identifiers.json), respectively.
 
-<img src="images/identifiers.png" alt="identifiers" width="200"/>
+<img src="images/identifiers.png" alt="identifiers" width="220"/>
 
-<img src="images/urls.png" alt="urls" width="700" />
+<img src="images/urls.png" alt="urls" width="720" />
 
 Also, [stage_build.txt](serverless-apps-builder/logs/stage_build.txt) and [stage_deploy.txt](serverless-apps-builder/logs/stage_deploy.txt) log files are generated during this process.
 
@@ -178,7 +178,7 @@ $ node labt -t "requestAuthorizerPython" "tokenAuthorizerPython"
 
 The output of this process is placed in the `outputs/artillery` folder in JSON form. For instance, [requestAuthorizerGo.json](outputs/artillery/requestAuthorizerGo.json).
 
-<img src="images/artillery-json.png" alt="artillery_json" width="300"/>
+<img src="images/artillery-json.png" alt="artillery_json" width="340"/>
 
 ### Option Report
 
@@ -214,7 +214,7 @@ Two files are generated as a result. One contains the [query identifier](outputs
 
 ### Combination of Options
 
-This application can accept flag combinations of more than one input. With the following command, the user will do a clean deployment, then run the test and create an HTML report, as well as generate the results of a Logs Insight query.
+This application can accept flag combinations of more than one input. With the following command, the application do a clean deployment, then run the test and create an HTML report, as well as generate the results of a Logs Insight query.
 
 ```sh
 $ node labt -c -d -t -r -li
