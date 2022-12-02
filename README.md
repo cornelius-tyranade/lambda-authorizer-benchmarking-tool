@@ -78,12 +78,12 @@ The author's machine and system are described below.
 $ system_profiler SPSoftwareDataType
 System Software Overview:
 
-      System Version: macOS 13.0 (22A380)
-      Kernel Version: Darwin 22.1.0
-      Boot Volume: Macintosh HD
-      Boot Mode: Normal
-      Secure Virtual Memory: Enabled
-      System Integrity Protection: Enabled
+System Version: macOS 13.0 (22A380)
+Kernel Version: Darwin 22.1.0
+Boot Volume: Macintosh HD
+Boot Mode: Normal
+Secure Virtual Memory: Enabled
+System Integrity Protection: Enabled
 ```
 
 ## Installation
