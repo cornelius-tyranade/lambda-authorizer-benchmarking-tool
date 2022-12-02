@@ -303,9 +303,9 @@ scenarios:
 
 ```json
 {
-  "artillery": {
-    "duration": 10,
-    "rate": 10
+  "logsInsight": {
+    "timeRange": 1440,
+    "waitTimeQuery": 15
   }
 }
 ```
