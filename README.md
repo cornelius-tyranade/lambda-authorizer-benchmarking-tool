@@ -41,7 +41,7 @@ Apache Maven 3.8.6
   - [Development Environment](#development-environment)
   - [Installation](#installation)
     - [Dependencies](#dependencies)
-    - [AWS SAM Config](#aws-sam-config)
+    - [AWS SAM Configurations](#aws-sam-configurations)
   - [Usage](#usage)
     - [Option Help](#option-help)
     - [Option Clean](#option-clean)
@@ -114,7 +114,7 @@ The NodeJS application dependencies need to be installed and set up as follows:
 $ npm install
 ```
 
-### AWS SAM Config
+### AWS SAM Configurations
 
 This application uses AWS SAM as serverless application builder, so the user need to run below command to configure samconfig.toml.
 
