@@ -752,14 +752,14 @@ It is necessary to change the code in labt.js if the user wants to modify or add
 ```js
 // runAwsCloudWatchLogsInsight method
 let commandQuery<queryTitle> = 'aws logs start-query ' +
-        '--log-group-names ' + <identifierParams/identifierRequestParams/identifierTokenParams> +
+        '--log-group-names ' + <identifierParams|identifierRequestParams|identifierTokenParams> +
         ' --start-time ' + startTime +
         ' --end-time ' + endTime +
         ' --query-string \'<your_query>\'' +
         ' > outputs/logs_insight/query_id_<queryTitle>.json';
 
 // Add the code afterward
-executeLogsInsight(<identifierParams/identifierRequestParams/identifierTokenParams> !== '' ? <queryTitle> : '', <errorMessage>, <delayMessage>, "<queryTitle>.json");
+executeLogsInsight(<identifierParams|identifierRequestParams|identifierTokenParams> !== '' ? <queryTitle> : '', <errorMessage>, <delayMessage>, "<queryTitle>.json");
 ```
 
 ## Authors
