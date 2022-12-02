@@ -212,15 +212,92 @@ $ node labt -d
 
 Upon completion, each scenario's URLs and identifiers are extracted into [urls.json](serverless-apps-builder/logs/urls.json) and [identifiers.json](serverless-apps-builder/logs/identifiers.json), respectively.
 
-<img src="images/identifiers.png" alt="identifiers" width="220"/>
+```json
+[
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-go?QueryString1=queryValue1",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-go -H \"AuthorizationToken: Bearer allow\"",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-python?QueryString1=queryValue1",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-node?QueryString1=queryValue1",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-node -H \"AuthorizationToken: Bearer allow\"",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-java?QueryString1=queryValue1",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-python -H \"AuthorizationToken: Bearer allow\"",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-java -H \"AuthorizationToken: Bearer allow\""
+]
+```
 
-<img src="images/urls.png" alt="urls" width="720" />
+```json
+[
+  "requestAuthorizerGo",
+  "tokenAuthorizerGo",
+  "requestAuthorizerPython",
+  "requestAuthorizerNode",
+  "tokenAuthorizerNode",
+  "requestAuthorizerJava",
+  "tokenAuthorizerPython",
+  "tokenAuthorizerJava"
+]
+```
 
 Also, [stage_build.txt](serverless-apps-builder/logs/stage_build.txt) and [stage_deploy.txt](serverless-apps-builder/logs/stage_deploy.txt) log files are generated during this process.
 
-<img src="images/stage-build.png" alt="stage_build" width="500"/>
+```
+Build Succeeded
 
-<img src="images/stage-deploy.png" alt="stage_deploy" width="700"/>
+Built Artifacts  : .aws-sam/build
+Built Template   : .aws-sam/build/template.yaml
+
+Commands you can use next
+=========================
+[*] Validate SAM template: sam validate
+[*] Invoke Function: sam local invoke
+[*] Test Function in the Cloud: sam sync --stack-name {stack-name} --watch
+[*] Deploy: sam deploy --guided
+```
+
+```
+	Deploying with following values
+	===============================
+	Stack name                   : lambda-authorizer-benchmarking-tool
+	Region                       : eu-west-1
+	Confirm changeset            : False
+	Disable rollback             : False
+	Deployment s3 bucket         : aws-sam-cli-managed-default-samclisourcebucket-xxxxx
+	Capabilities                 : ["CAPABILITY_IAM"]
+	Parameter overrides          : {}
+	Signing Profiles             : {}
+
+Initiating deployment
+=====================
+
+Waiting for changeset to be created..
+CloudFormation stack changeset
+-------------------------------------------------------------------------------------------------
+Operation                LogicalResourceId        ResourceType             Replacement
+-------------------------------------------------------------------------------------------------
++ Add                    AppApi                   AWS::ApiGateway::RestA   N/A
+                                                  pi
+...
+
+-------------------------------------------------------------------------------------------------
+CloudFormation outputs from deployed stack
+-------------------------------------------------------------------------------------------------
+Outputs
+-------------------------------------------------------------------------------------------------
+Key                 requestAuthorizerGo
+Description         Request Authorizer Node Get Endpoint
+Value               https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-
+go?QueryString1=queryValue1
+
+Key                 tokenAuthorizerGo
+Description         Token Authorizer Go Get Endpoint
+Value               https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-go -H
+"AuthorizationToken: Bearer allow"
+...
+
+-------------------------------------------------------------------------------------------------
+
+Successfully created/updated stack - lambda-authorizer-benchmarking-tool in eu-west-1
+```
 
 ### Option Test
 
