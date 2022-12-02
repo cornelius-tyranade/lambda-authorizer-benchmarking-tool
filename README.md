@@ -41,6 +41,7 @@ Apache Maven 3.8.6
   - [Development Environment](#development-environment)
   - [Installation](#installation)
     - [Dependencies](#dependencies)
+    - [AWS SAM Config](#aws-sam-config)
   - [Usage](#usage)
     - [Option Help](#option-help)
     - [Option Clean](#option-clean)
@@ -111,6 +112,58 @@ The NodeJS application dependencies need to be installed and set up as follows:
 
 ```sh
 $ npm install
+```
+
+### AWS SAM Config
+
+This application uses AWS SAM as serverless application builder, so the user need to run below command to configure samconfig.toml.
+
+```sh
+$ sam deploy --guided
+
+Configuring SAM deploy
+======================
+
+Looking for config file [samconfig.toml] :  Found
+Reading default arguments  :  Success
+
+Setting default arguments for 'sam deploy'
+=========================================
+Stack Name [lambda-authorizer-benchmarking-tool]:
+AWS Region [eu-west-1]:
+#Shows you resources changes to be deployed and require a 'Y' to initiate deploy
+Confirm changes before deploy [Y/n]: Y
+#SAM needs permission to be able to create roles to connect to the resources in your template
+Allow SAM CLI IAM role creation [Y/n]: Y
+#Preserves the state of previously provisioned resources when an operation fails
+Disable rollback [y/N]: N
+Save arguments to configuration file [Y/n]: Y
+SAM configuration file [samconfig.toml]:
+SAM configuration environment [default]:
+```
+
+However, do not type "Y" when the terminal asks to start deployment. Leave the input blank, and the capital letter value will be used by default.
+
+```sh
+Previewing CloudFormation changeset before deployment
+======================================================
+Deploy this changeset? [y/N]:
+```
+
+Alternatively, the user can directly modify [samconfig.toml](serverless-apps-builder/samconfig.toml).
+
+```toml
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "lambda-authorizer-benchmarking-tool"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-xxxxx"
+s3_prefix = "lambda-authorizer-benchmarking-tool"
+region = "eu-west-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
 ```
 
 ## Usage

@@ -3,7 +3,7 @@ version = 0.1
 [default.deploy]
 [default.deploy.parameters]
 stack_name = "lambda-authorizer-benchmarking-tool"
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1eqdwfx0dtojv"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-xxxxx"
 s3_prefix = "lambda-authorizer-benchmarking-tool"
 region = "eu-west-1"
 confirm_changeset = true
