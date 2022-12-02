@@ -5,6 +5,6 @@
   },
   "logsInsight": {
     "timeRange": 1440,
-    "waitTimeQuery": 5
+    "waitTimeQuery": 15
   }
 }
