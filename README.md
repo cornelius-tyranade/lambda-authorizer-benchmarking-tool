@@ -492,7 +492,7 @@ let commandQuery<queryTitle> = 'aws logs start-query ' +
         ' > outputs/logs_insight/query_id_<queryTitle>.json';
 
 // Add the code afterward
-executeLogsInsight(<identifierParams/identifierRequestParams/identifierTokenParams> !== '' ? <qqueryTitle> : '', <errorMessage>, <delayMessage>, "<queryTitle>.json");
+executeLogsInsight(<identifierParams/identifierRequestParams/identifierTokenParams> !== '' ? <queryTitle> : '', <errorMessage>, <delayMessage>, "<queryTitle>.json");
 ```
 
 ## Authors
