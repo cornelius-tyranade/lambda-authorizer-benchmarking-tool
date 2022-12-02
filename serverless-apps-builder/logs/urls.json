@@ -1,10 +1,10 @@
 [
-    "https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/req-auth-go?QueryString1=queryValue1",
-    "https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-go -H \"AuthorizationToken: Bearer allow\"",
-    "https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/req-auth-python?QueryString1=queryValue1",
-    "https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/req-auth-node?QueryString1=queryValue1",
-    "https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-node -H \"AuthorizationToken: Bearer allow\"",
-    "https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/req-auth-java?QueryString1=queryValue1",
-    "https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-python -H \"AuthorizationToken: Bearer allow\"",
-    "https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-java -H \"AuthorizationToken: Bearer allow\""
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-go?QueryString1=queryValue1",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-go -H \"AuthorizationToken: Bearer allow\"",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-python?QueryString1=queryValue1",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-node?QueryString1=queryValue1",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-node -H \"AuthorizationToken: Bearer allow\"",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-java?QueryString1=queryValue1",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-python -H \"AuthorizationToken: Bearer allow\"",
+  "https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-java -H \"AuthorizationToken: Bearer allow\""
 ]

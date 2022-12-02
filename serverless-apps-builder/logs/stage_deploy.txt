@@ -5,7 +5,7 @@
 	Region                       : eu-west-1
 	Confirm changeset            : False
 	Disable rollback             : False
-	Deployment s3 bucket         : aws-sam-cli-managed-default-samclisourcebucket-1eqdwfx0dtojv
+	Deployment s3 bucket         : aws-sam-cli-managed-default-samclisourcebucket-xxxxx
 	Capabilities                 : ["CAPABILITY_IAM"]
 	Parameter overrides          : {}
 	Signing Profiles             : {}
@@ -168,9 +168,6 @@ Operation                LogicalResourceId        ResourceType             Repla
 + Add                    TokenAuthorizerPythonR   AWS::ApiGateway::Resou   N/A                    
                          esource                  rce                                             
 -------------------------------------------------------------------------------------------------
-
-Changeset created successfully. arn:aws:cloudformation:eu-west-1:800139991280:changeSet/samcli-deploy1669747485/67fdef5c-4c46-4c58-a388-a9ad2ed54824
-
 
 2022-11-29 18:45:01 - Waiting for stack create/update to complete
 
@@ -633,42 +630,42 @@ Outputs
 -------------------------------------------------------------------------------------------------
 Key                 requestAuthorizerGo                                                         
 Description         Request Authorizer Node Get Endpoint                                        
-Value               https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/req-auth-         
+Value               https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-         
 go?QueryString1=queryValue1                                                                     
 
 Key                 tokenAuthorizerGo                                                           
 Description         Token Authorizer Go Get Endpoint                                            
-Value               https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-go -H    
+Value               https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-go -H    
 "AuthorizationToken: Bearer allow"                                                              
 
 Key                 requestAuthorizerPython                                                     
 Description         Request Authorizer Python Get Endpoint                                      
-Value               https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/req-auth-         
+Value               https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-         
 python?QueryString1=queryValue1                                                                 
 
 Key                 requestAuthorizerNode                                                       
 Description         Request Authorizer Node Get Endpoint                                        
-Value               https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/req-auth-         
+Value               https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-         
 node?QueryString1=queryValue1                                                                   
 
 Key                 tokenAuthorizerNode                                                         
 Description         Token Authorizer Node Get Endpoint                                          
-Value               https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-node -H  
+Value               https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-node -H  
 "AuthorizationToken: Bearer allow"                                                              
 
 Key                 requestAuthorizerJava                                                       
 Description         Request Authorizer Java Get Endpoint                                        
-Value               https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/req-auth-         
+Value               https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/req-auth-         
 java?QueryString1=queryValue1                                                                   
 
 Key                 tokenAuthorizerPython                                                       
 Description         Token Authorizer Python Get Endpoint                                        
-Value               https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-python   
+Value               https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-python   
 -H "AuthorizationToken: Bearer allow"                                                           
 
 Key                 tokenAuthorizerJava                                                         
 Description         Token Authorizer Java Get Endpoint                                          
-Value               https://f3wjgtrbeh.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-java -H  
+Value               https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/tkn-auth-java -H  
 "AuthorizationToken: Bearer allow"                                                              
 -------------------------------------------------------------------------------------------------
 
