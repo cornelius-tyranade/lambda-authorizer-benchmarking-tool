@@ -168,12 +168,31 @@ Also, [stage_build.txt](serverless-apps-builder/logs/stage_build.txt) and [stage
 
 ### Option Test
 
-This option instructs the system to run performance testing repeatedly for a certain duration. The duration and rate of performance testing can be set from within the [default.json](config/default.json) file in the config folder. As an example, the duration and rate values are ten. The system will call the function ten times a second for ten seconds.
+This option instructs the system to run performance testing repeatedly for a certain duration. The duration and rate of performance testing can be set from within the [default.json](config/default.json) file in the `config` folder. As an example, the duration and rate values are ten. The system will call the function ten times a second for ten seconds.
 
 ```sh
 $ node labt -t
 $ node labt -t "tokenAuthorizerPython"
 $ node labt -t "requestAuthorizerPython" "tokenAuthorizerPython"
+```
+
+It also generated Artillery configuration in `config/artillery` folder. One of the examples is [requestAuthorizerGo.yml](config/artillery/requestAuthorizerGo.yml)
+
+```yml
+config:
+  target: https://xxxxx.execute-api.eu-west-1.amazonaws.com/v1/
+  phases:
+    - duration: 10
+      arrivalRate: 10
+      name: benchmarking
+
+scenarios:
+  - name: requestAuthorizerGo
+    flow:
+      - get:
+          url: /req-auth-go?QueryString1=queryValue1
+          expect:
+            - statusCode: 200
 ```
 
 The output of this process is placed in the `outputs/artillery` folder in JSON form. For instance, [requestAuthorizerGo.json](outputs/artillery/requestAuthorizerGo.json).
@@ -190,11 +209,7 @@ $ node labt -r "tokenAuthorizerNode"
 $ node labt -r "requestAuthorizerNode" "tokenAuthorizerNode"
 ```
 
-For generation result example is [requestAuthorizerGo.json.html](outputs/artillery/requestAuthorizerGo.json.html).
-
-<img src="images/artillery-html-1.png" alt="artillery_html_1" width="700"/>
-
-<img src="images/artillery-html-2.png" alt="artillery_html_2" width="700"/>
+Report HTML generation result can be found in section [report](#artillery-1).
 
 ### Option Logs Insight
 
@@ -214,7 +229,7 @@ Two files are generated as a result. One contains the [query identifier](outputs
 
 ### Combination of Options
 
-This application can accept flag combinations of more than one input. With the following command, the application do a clean deployment, then run the test and create an HTML report, as well as generate the results of a Logs Insight query.
+This application can accept flag combinations of more than one input. With the following command, the user can do a clean deployment, then run the test and create an HTML report, as well as generate the results of a Logs Insight query at once.
 
 ```sh
 $ node labt -c -d -t -r -li
@@ -222,21 +237,123 @@ $ node labt -c -d -t -r -li
 
 ## Configurations
 
+To simplify setting application variables, the author separated the configuration settings into a file called [default.json](config/default.json) within the `config` directory.
+
 ### Artillery
+
+1. Variable artillery.duration determines how long the performance test runs for each scenario.
+2. Variable artillery.rate specifies how many API calls are in one second.
+
+```json
+{
+  "artillery": {
+    "duration": 10,
+    "rate": 10
+  }
+}
+```
 
 #### Templates
 
+When the user runs the option test, the application will generate Artillery configurations in the `folder/artillery` based on the two templates provided, [artillery_request.yml]() and [artillery_token.yml]().
+
+```yml
+#artillery_request.yml
+config:
+  target: ${endpoint}
+  phases:
+    - duration: ${duration}
+      arrivalRate: ${rate}
+      name: benchmarking
+
+scenarios:
+  - name: ${identifier}
+    flow:
+      - get:
+          url: ${postfix-url}?QueryString1=queryValue1
+          expect:
+            - statusCode: 200
+
+#artillery_token.yml
+config:
+  target: ${endpoint}
+  phases:
+    - duration: ${duration}
+      arrivalRate: ${rate}
+      name: benchmarking
+
+scenarios:
+  - name: ${identifier}
+    flow:
+      - get:
+          url: ${postfix-url}
+          headers:
+            AuthorizationToken: "Bearer allow"
+          expect:
+            - statusCode: 200
+```
+
 ### Logs Insight
+
+1. Variable logsInsight.timeRange decides how many minutes before the current time are in order to fetch the logs.
+2. Variable logsInsight.waitTimeQuery sets the waiting time before getting actual Logs Insight query results.
+
+```json
+{
+  "artillery": {
+    "duration": 10,
+    "rate": 10
+  }
+}
+```
 
 ## Reports
 
+This section displays and explains the report output from the options test and Log Insights.
+
 ### Artillery
+
+Artillery HTML generation result sample can be found in `outputs/artillery`. One of the most important outputs in this HTML is response time. This result is basically the sum of the performance calculation of calling a Lamba Authorizer-enabled serverless function.Below is the example from [requestAuthorizerGo.json.html](outputs/artillery/requestAuthorizerGo.json.html):
+
+<img src="images/artillery-html-1.png" alt="artillery_html_1" width="700"/>
+
+<img src="images/artillery-html-2.png" alt="artillery_html_2" width="700"/>
 
 ### Logs Insight
 
+Logs Insight queries generate seven query results:
+
+1. Request-Token Access Control Overview Query (sorted by function name).
+
+   <img src="images/req-tkn-overview.png" alt="req_tkn_overview" width="800"/>
+
+2. Request Access Controlled Max Init Duration Query (in miliseconds).
+
+   <img src="images/req-maxInitDuration.png" alt="req_maxInitDuration" width="400"/>
+
+3. Request Access Control Max Duration Query (in miliseconds).
+
+   <img src="images/req-maxDuration.png" alt="req_maxDuration" width="300"/>
+
+4. Request Access Control Max Used Memory Query (in MB).
+
+   <img src="images/req-maxMemoryUsedMB.png" alt="req_maxMemoryUsedMB" width="500"/>
+
+5. Token Access Control Max Init Duration Query (in miliseconds).
+
+   <img src="images/tkn-maxInitDuration.png" alt="tkn_maxInitDuration" width="400"/>
+
+6. Token Access Control Max Duration Query (in miliseconds).
+
+   <img src="images/tkn-maxDuration.png" alt="tkn_maxDuration" width="300"/>
+
+7. Token Access Control Max Used Memory Query (in MB).
+
+   <img src="images/tkn-maxMemoryUsedMB.png" alt="tkn_maxMemoryUsedMB" width="500"/>
+
 ## Authors
 
-- **Cornelius** - _Initial work_ - [cornelius-tyranade](https://github.com/cornelius-tyranade)
+- **Cornelius** - _Initial work_ - [cornelius-tyranade](https://github.com/cornelius-tyranade) - x21126747@student.ncirl.ie
 
 ## License
 
