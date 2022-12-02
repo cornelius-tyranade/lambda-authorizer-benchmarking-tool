@@ -146,8 +146,6 @@ It also logs the erasing process into `serverless-apps-builder/logs` folder as [
 
 <img src="images/stage-delete.png" alt="stage_delete" width="500"/>
 
-<br />
-
 ### Option Deploy
 
 This option deploys all scenarios according to what is written in the template.yaml after building the scenarios code.
@@ -168,8 +166,6 @@ Also, [stage_build.txt](serverless-apps-builder/logs/stage_build.txt) and [stage
 
 <img src="images/stage-deploy.png" alt="stage_deploy" width="700"/>
 
-<br />
-
 ### Option Test
 
 This option instructs the system to run performance testing repeatedly for a certain duration. The duration and rate of performance testing can be set from within the [default.json](config/default.json) file in the config folder. As an example, the duration and rate values are ten. The system will call the function ten times a second for ten seconds.
@@ -183,8 +179,6 @@ $ node labt -t "requestAuthorizerPython" "tokenAuthorizerPython"
 The output of this process is placed in the `outputs/artillery` folder in JSON form. For instance, [requestAuthorizerGo.json](outputs/artillery/requestAuthorizerGo.json).
 
 <img src="images/artillery-json.png" alt="artillery_json" width="300"/>
-
-<br />
 
 ### Option Report
 
@@ -202,8 +196,6 @@ For generation result example is [requestAuthorizerGo.json.html](outputs/artille
 
 <img src="images/artillery-html-2.png" alt="artillery_html_2" width="700"/>
 
-<br />
-
 ### Option Logs Insight
 
 The AWS CloudWatch logs record each function' activities when the user run performance tests. This option queries several important output parameters from logs, such as init/cold duration, warm duration, and also memory used. The results of this output are placed in the `outputs/logs_insight folder`.
@@ -219,8 +211,6 @@ Two files are generated as a result. One contains the [query identifier](outputs
 <img src="images/li-query-id.png" alt="logs_insight_query_id" width="350"/>
 
 <img src="images/li-query-result.png" alt="logs_insight_query_result" width="280"/>
-
-<br />
 
 ### Combination of Options
 
