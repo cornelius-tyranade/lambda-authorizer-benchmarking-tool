@@ -216,7 +216,7 @@ Report HTML generation result can be found in section [report](#artillery-1).
 
 ### Option Logs Insight
 
-The AWS CloudWatch logs record each function' activities when the user run performance tests. This option queries several important output parameters from logs, such as init/cold duration, warm duration, and also memory used. The results of this output are placed in the `outputs/logs_insight folder`.
+The AWS CloudWatch logs record each function' activities when the user run performance tests. This option queries several important output parameters from logs, such as init/cold duration, warm duration, and also memory used. The results of this output are placed in the `outputs/logs_insight` folder.
 
 ```sh
 $ node labt -li

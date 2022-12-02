@@ -1,3 +1,5 @@
 serverless-apps-builder/.aws-sam
+serverless-apps-builder/logs
+outputs
 node_modules
 .DS_Store
