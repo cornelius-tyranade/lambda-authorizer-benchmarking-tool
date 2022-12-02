@@ -630,23 +630,23 @@ If the user wants to add new language runtimes as a scenario, the user needs to 
 Below is the example template to add new language runtime:
 
 ```yaml
-### Lambda <Request/Token> Authorizer <Runtime>
-<Request/Token>Authorizer<Runtime>Resource:
+### Lambda <Request|Token> Authorizer <Runtime>
+<Request|Token>Authorizer<Runtime>Resource:
   Type: AWS::ApiGateway::Resource
   Properties:
     ParentId: !GetAtt AppApi.RootResourceId
-    PathPart: "<req/tkn>-auth-<runtime>"
+    PathPart: "<req|tkn>-auth-<runtime>"
     RestApiId: !Ref AppApi
 
 # GET Method with Lambda authorizer <request/token> enabled
-<Request/Token>Authorizer<Runtime>Get:
+<Request|Token>Authorizer<Runtime>Get:
   Type: AWS::ApiGateway::Method
   Properties:
     RestApiId: !Ref AppApi
-    ResourceId: !Ref <Request/Token>Authorizer<Runtime>Resource
+    ResourceId: !Ref <Request|Token>Authorizer<Runtime>Resource
     HttpMethod: GET
     AuthorizationType: CUSTOM
-    AuthorizerId: !Ref AuthorizersLambda<Request/Token><Runtime>
+    AuthorizerId: !Ref AuthorizersLambda<Request|Token><Runtime>
     Integration:
       Type: AWS_PROXY
       IntegrationHttpMethod: POST
@@ -657,19 +657,19 @@ Below is the example template to add new language runtime:
             "arn:aws:apigateway:",
             !Ref AWS::Region,
             ":lambda:path/2015-03-31/functions/",
-            !GetAtt App<Request/Token>Authorizer<Runtime>Function.Arn,
+            !GetAtt App<Request|Token>Authorizer<Runtime>Function.Arn,
             "/invocations",
           ],
         ]
 
-# Lambda <Request/Token> Authorizer
-AuthorizersLambda<Request/Token><Runtime>:
+# Lambda <Request|Token> Authorizer
+AuthorizersLambda<Request|Token><Runtime>:
   Type: AWS::ApiGateway::Authorizer
   Properties:
-    Name: AuthorizersLambda<Request/Token><Runtime>
+    Name: AuthorizersLambda<Request|Token><Runtime>
     Type: REQUEST
     RestApiId: !Ref AppApi
-    IdentitySource: <method.request.querystring.QueryString1/method.request.header.AuthorizationToken>
+    IdentitySource: <method.request.querystring.QueryString1|method.request.header.AuthorizationToken>
     AuthorizerResultTtlInSeconds: 0
     AuthorizerUri:
       !Join [
@@ -678,7 +678,7 @@ AuthorizersLambda<Request/Token><Runtime>:
           "arn:aws:apigateway:",
           !Ref AWS::Region,
           ":lambda:path/2015-03-31/functions/",
-          !GetAtt <Request/Token>Authorizer<Runtime>Function.Arn,
+          !GetAtt <Request|Token>Authorizer<Runtime>Function.Arn,
           "/invocations",
         ],
       ]
@@ -687,20 +687,20 @@ AuthorizersLambda<Request/Token><Runtime>:
 App<Request/Token>Authorizer<Runtime>Function:
   Type: AWS::Serverless::Function
   Properties:
-    FunctionName: app<Request/Token>Authorizer<Runtime>
-    Description: <Request/Token> Authorizer <Runtime> Application
+    FunctionName: app<Request|Token>Authorizer<Runtime>
+    Description: <Request|Token> Authorizer <Runtime> Application
     Runtime: <runtimeVersion>
     CodeUri: scenarios/<runtime>
-    Handler: app<Request/Token>Authorizer.lambda_handler
+    Handler: app<Request|Token>Authorizer.lambda_handler
     MemorySize: 128
     Timeout: 3
 
 # <request/token>Authorizer<Runtime> function
-<Request/Token>Authorizer<Runtime>Function:
+<Request|Token>Authorizer<Runtime>Function:
   Type: AWS::Serverless::Function
   Properties:
-    FunctionName: <request/token>Authorizer<Runtime>
-    Description: <Request/Token> Authorizer <Runtime>
+    FunctionName: <request|token>Authorizer<Runtime>
+    Description: <Request|Token> Authorizer <Runtime>
     Runtime: <runtimeVersion>
     CodeUri: scenarios/<runtime>
     Handler: <request/token>Authorizer.lambda_handler
@@ -711,33 +711,33 @@ App<Request/Token>Authorizer<Runtime>Function:
 App<Request/Token>Authorizer<Runtime>Permission:
   Type: AWS::Lambda::Permission
   Properties:
-    FunctionName: !Ref App<Request/Token>Authorizer<Runtime>Function
+    FunctionName: !Ref App<Request|Token>Authorizer<Runtime>Function
     Action: lambda:InvokeFunction
     Principal: apigateway.amazonaws.com
-    SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/*/GET/<req/tkn>-auth-<runtime>
+    SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/*/GET/<req|tkn>-auth-<runtime>
 
-# Permission to allow <Request/Token>Authorizer<Runtime>Function invocation from API Gateway
-<Request/Token>Authorizer<Runtime>FunctionPermission:
+# Permission to allow <Request|Token>Authorizer<Runtime>Function invocation from API Gateway
+<Request|Token>Authorizer<Runtime>FunctionPermission:
   Type: AWS::Lambda::Permission
   Properties:
-    FunctionName: !Ref <Request/Token>Authorizer<Runtime>Function
+    FunctionName: !Ref <Request|Token>Authorizer<Runtime>Function
     Action: lambda:InvokeFunction
     Principal: apigateway.amazonaws.com
-    SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambda<Request/Token><Runtime>}
+    SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${AppApi}/authorizers/${AuthorizersLambda<Request|Token><Runtime>}
 
 ### Deployment and Output Setup
 Deployment:
   Type: AWS::ApiGateway::Deployment
   DependsOn:
-    - <Request/Token>Authorizer<Runtime>Get
+    - <Request|Token>Authorizer<Runtime>Get
   Properties:
     RestApiId: !Ref AppApi
 
 Outputs:
 # API Gateway endpoint to be used during performance tests
 <Request/Token>Authorizer<Runtime>:
-  Description: <Request/Token> Authorizer <Runtime> Get Endpoint
-  Value: !Sub "https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/req-auth-<runtime> <\?QueryString1=queryValue1/ -H \"AuthorizationToken: Bearer allow\">"
+  Description: <Request|Token> Authorizer <Runtime> Get Endpoint
+  Value: !Sub "https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/<req|tkn>-auth-<runtime> <\?QueryString1=queryValue1| -H \"AuthorizationToken: Bearer allow\">"
 
 ```
 
