@@ -255,16 +255,16 @@ Commands you can use next
 ```
 
 ```
-	Deploying with following values
-	===============================
-	Stack name                   : lambda-authorizer-benchmarking-tool
-	Region                       : eu-west-1
-	Confirm changeset            : False
-	Disable rollback             : False
-	Deployment s3 bucket         : aws-sam-cli-managed-default-samclisourcebucket-xxxxx
-	Capabilities                 : ["CAPABILITY_IAM"]
-	Parameter overrides          : {}
-	Signing Profiles             : {}
+Deploying with following values
+===============================
+Stack name                   : lambda-authorizer-benchmarking-tool
+Region                       : eu-west-1
+Confirm changeset            : False
+Disable rollback             : False
+Deployment s3 bucket         : aws-sam-cli-managed-default-samclisourcebucket-xxxxx
+Capabilities                 : ["CAPABILITY_IAM"]
+Parameter overrides          : {}
+Signing Profiles             : {}
 
 Initiating deployment
 =====================
@@ -356,7 +356,11 @@ $ node labt -li "tokenAuthorizerGo" "tokenAuthorizerJava"
 
 Two files are generated as a result. One contains the [query identifier](outputs/logs_insight/query_id_overview.json), and the other contains the [results](outputs/logs_insight/query_result_overview.json). Below is a sample of the Logs Insight query:
 
-<img src="images/li-query-id.png" alt="logs_insight_query_id" width="350"/>
+```json
+{
+  "queryId": "ad83de51-9e1a-4dbd-8baa-742527399491"
+}
+```
 
 <img src="images/li-query-result.png" alt="logs_insight_query_result" width="280"/>
 
