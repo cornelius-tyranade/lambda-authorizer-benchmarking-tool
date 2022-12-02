@@ -299,7 +299,7 @@ scenarios:
 ### Logs Insight
 
 1. Variable logsInsight.timeRange decides how many minutes before the current time are in order to fetch the logs.
-2. Variable logsInsight.waitTimeQuery sets the waiting time before getting actual Logs Insight query results.
+2. Variable logsInsight.waitTimeQuery sets the waiting time (in second) before getting actual Logs Insight query results.
 
 ```json
 {
