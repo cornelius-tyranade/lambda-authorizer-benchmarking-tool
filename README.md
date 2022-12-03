@@ -200,8 +200,6 @@ $ node labt -c
 
 It also logs the erasing process into `serverless-apps-builder/logs` folder as [stage_delete.txt](serverless-apps-builder/logs/stage_delete.txt).
 
-<img src="images/stage-delete.png" alt="stage_delete" width="500"/>
-
 ### Option Deploy
 
 This option deploys all scenarios according to what is written in the template.yaml after building the scenarios code.
