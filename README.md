@@ -116,7 +116,7 @@ $ npm install
 
 ### AWS SAM Configurations
 
-This application uses AWS SAM as serverless application builder, so the user need to run below command to configure samconfig.toml.
+This application uses AWS SAM as serverless application builder, so the user need to run below command to configure [samconfig.toml](serverless-apps-builder/samconfig.toml).
 
 ```sh
 $ sam deploy --guided
@@ -150,7 +150,7 @@ Previewing CloudFormation changeset before deployment
 Deploy this changeset? [y/N]:
 ```
 
-Alternatively, the user can directly modify [samconfig.toml](serverless-apps-builder/samconfig.toml).
+Alternatively, the user can directly modify existing [samconfig.toml](serverless-apps-builder/samconfig.toml).
 
 ```toml
 version = 0.1
@@ -538,11 +538,11 @@ scenarios:
 
 ## Reports
 
-Following a 100 times call to each scenario function, this section displays the report output from the options test and Log Insights.
+This section displays the report output from the options Test and Logs Insight after 100 calls to each scenario function.
 
 ### Artillery
 
-Artillery HTML generation result sample can be found in `outputs/artillery`. One of the most important outputs in this HTML is response time. This result is basically the sum of the performance calculation of calling a Lamba Authorizer-enabled serverless function.Below is the example from [requestAuthorizerGo.json.html](outputs/artillery/requestAuthorizerGo.json.html):
+Artillery HTML generation result sample can be found in `outputs/artillery`. One of the most important outputs in this HTML is response time. This result is basically the sum of the performance calculation of calling a Lambda Authorizer-enabled serverless function. Below is the example from [requestAuthorizerGo.json.html](outputs/artillery/requestAuthorizerGo.json.html):
 
 <img src="images/artillery-html-1.png" alt="artillery_html_1" width="900"/>
 
@@ -745,7 +745,7 @@ As explained in section [Artillery reports](#artillery-1), the artillery perform
 
 ### Add/Modify Logs Insight Queries
 
-It is necessary to change the code in labt.js if the user wants to modify or add to the Log Insight query. Below are the code section that user need to modify:
+It is necessary to change the code in [labt.js](labt.js) if the user wants to modify or add to the Log Insight query. Users can read the document [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html) to learn the AWS CloudWatch Logs Insight query language. Below is the code section that the user needs to modify:
 
 ```js
 // runAwsCloudWatchLogsInsight method
