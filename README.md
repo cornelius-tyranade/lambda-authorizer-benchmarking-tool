@@ -681,8 +681,8 @@ AuthorizersLambda<Request|Token><Runtime>:
         ],
       ]
 
-# App<Request/Token>Authorizer<Runtime> function
-App<Request/Token>Authorizer<Runtime>Function:
+# App<Request|Token>Authorizer<Runtime> function
+App<Request|Token>Authorizer<Runtime>Function:
   Type: AWS::Serverless::Function
   Properties:
     FunctionName: app<Request|Token>Authorizer<Runtime>
@@ -693,7 +693,7 @@ App<Request/Token>Authorizer<Runtime>Function:
     MemorySize: 128
     Timeout: 3
 
-# <request/token>Authorizer<Runtime> function
+# <request|token>Authorizer<Runtime> function
 <Request|Token>Authorizer<Runtime>Function:
   Type: AWS::Serverless::Function
   Properties:
@@ -705,8 +705,8 @@ App<Request/Token>Authorizer<Runtime>Function:
     MemorySize: 128
     Timeout: 3
 
-# Permission to allow App<Request/Token>Authorizer<Runtime>Function invocation from API Gateway
-App<Request/Token>Authorizer<Runtime>Permission:
+# Permission to allow App<Request|Token>Authorizer<Runtime>Function invocation from API Gateway
+App<Request|Token>Authorizer<Runtime>Permission:
   Type: AWS::Lambda::Permission
   Properties:
     FunctionName: !Ref App<Request|Token>Authorizer<Runtime>Function
