@@ -636,7 +636,7 @@ Below is the example template to add new language runtime:
     PathPart: "<req|tkn>-auth-<runtime>"
     RestApiId: !Ref AppApi
 
-# GET Method with Lambda authorizer <request/token> enabled
+# GET Method with Lambda authorizer <request|token> enabled
 <Request|Token>Authorizer<Runtime>Get:
   Type: AWS::ApiGateway::Method
   Properties:
@@ -701,7 +701,7 @@ App<Request|Token>Authorizer<Runtime>Function:
     Description: <Request|Token> Authorizer <Runtime>
     Runtime: <runtimeVersion>
     CodeUri: scenarios/<runtime>
-    Handler: <request/token>Authorizer.lambda_handler
+    Handler: <request|token>Authorizer.lambda_handler
     MemorySize: 128
     Timeout: 3
 
@@ -733,7 +733,7 @@ Deployment:
 
 Outputs:
 # API Gateway endpoint to be used during performance tests
-<Request/Token>Authorizer<Runtime>:
+<Request|Token>Authorizer<Runtime>:
   Description: <Request|Token> Authorizer <Runtime> Get Endpoint
   Value: !Sub "https://${AppApi}.execute-api.${AWS::Region}.amazonaws.com/v1/<req|tkn>-auth-<runtime> <\?QueryString1=queryValue1| -H \"AuthorizationToken: Bearer allow\">"
 
