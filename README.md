@@ -44,6 +44,7 @@ Apache Maven 3.8.6
     - [AWS SAM Configurations](#aws-sam-configurations)
   - [Usage](#usage)
     - [Option Help](#option-help)
+    - [Option Version](#option-version)
     - [Option Clean](#option-clean)
     - [Option Deploy](#option-deploy)
     - [Option Test](#option-test)
@@ -188,6 +189,14 @@ Options:
   -r, --report [identifers...]         generate Artillery performance test report in HTML
   -li, --logs-insight [identifers...]  generate AWS CloudWatch logs insight query result in JSON
   -h, --help                           display help for command
+```
+
+### Option Version
+
+Lambda Authorizer Benchmarking Tool version can be found by selecting this option.
+
+```sh
+$ node labt -v
 ```
 
 ### Option Clean
