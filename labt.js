@@ -1,3 +1,4 @@
+// Import depedencies
 const { Command } = require('commander');
 const { execSync } = require('child_process');
 const fs = require("fs");
@@ -54,6 +55,7 @@ doOptionLogsInsight(options.logsInsight);
     ======================
 */
 
+// Check if system application is exist
 function checkSystemApplication(appName, errorMessage) {
     commandExists(appName).then(exists => {
         if (!exists) {
@@ -66,6 +68,7 @@ function checkSystemApplication(appName, errorMessage) {
     })
 }
 
+// Execute Shell command
 function executeShell(command, errorMessage) {
     if (shell.exec(command).code !== 0) {
         shell.echo(errorMessage);
@@ -73,12 +76,14 @@ function executeShell(command, errorMessage) {
     }
 }
 
+// Perform option clean
 function doOptionClean(isClean) {
     if (isClean) {
         executeShell('cd serverless-apps-builder && sam delete --no-prompts > logs/stage_delete.txt', 'Error: SAM delete failed');
     }
 }
 
+// Perform option deploy
 function doOptionDeploy(isDeploy) {
     if (isDeploy) {
         executeShell('cd serverless-apps-builder && sam build > logs/stage_build.txt', 'Error: SAM build failed');
@@ -88,6 +93,7 @@ function doOptionDeploy(isDeploy) {
     }
 }
 
+// Perform option test
 function doOptionTest(inputParam) {
     if (inputParam) {
         let { urlsJson, identifiersJson } = getUrlsAndIdentifiersJSON(inputParam);
@@ -97,6 +103,7 @@ function doOptionTest(inputParam) {
     }
 }
 
+// Generate URLs and Identifiers JSON
 function getUrlsAndIdentifiersJSON(inputParam) {
     let urlsJson = null;
     let identifiersJson = null;
@@ -132,6 +139,7 @@ function getUrlsAndIdentifiersJSON(inputParam) {
     };
 }
 
+// Check if an object is a list
 function isIterable(object) {
     if (object == null) {
         return false;
@@ -139,6 +147,7 @@ function isIterable(object) {
     return typeof object[Symbol.iterator] === 'function';
 }
 
+// Replicate Artillery template
 function copyArtilleryTemplate(urls, identifiers) {
     for (let i = 0; i < urls.length; i++) {
         let identifer = identifiers[i];
@@ -158,6 +167,7 @@ function copyArtilleryTemplate(urls, identifiers) {
     }
 }
 
+// Replace replicated Artillery template values
 function replaceArtilleryTemplate(urls, identifiers) {
     for (let i = 0; i < urls.length; i++) {
         let url = urls[i];
@@ -180,6 +190,7 @@ function replaceArtilleryTemplate(urls, identifiers) {
     }
 }
 
+// Replace text with another text in files
 function replaceStringInFiles(destinationFile, fromValue, toValue) {
     const options = {
         files: destinationFile,
@@ -195,6 +206,7 @@ function replaceStringInFiles(destinationFile, fromValue, toValue) {
     }
 }
 
+// Perform Artillery performance tests
 function runArtilleryTest(urls, identifiers) {
     for (let i = 0; i < urls.length; i++) {
         let identifier = identifiers[i];
@@ -202,6 +214,7 @@ function runArtilleryTest(urls, identifiers) {
     }
 }
 
+// Perform option report
 function doOptionReport(inputParam) {
     if (inputParam) {
         let { urlsJson, identifiersJson } = getUrlsAndIdentifiersJSON(inputParam);
@@ -209,6 +222,7 @@ function doOptionReport(inputParam) {
     }
 }
 
+// Perform Artillery generate HTML reports
 function runArtilleryReport(urls, identifiers) {
     for (let i = 0; i < urls.length; i++) {
         let identifier = identifiers[i];
@@ -216,6 +230,7 @@ function runArtilleryReport(urls, identifiers) {
     }
 }
 
+// Perform option logs insight
 function doOptionLogsInsight(inputParam) {
     if (inputParam) {
         let { identifiersJson } = getUrlsAndIdentifiersJSON(inputParam);
@@ -223,6 +238,7 @@ function doOptionLogsInsight(inputParam) {
     }
 }
 
+// Generate logs insight query templates
 function runAwsCloudWatchLogsInsight(identifiers) {
     let identifierParams = '';
     let identifierTokenParams = '';
@@ -384,6 +400,7 @@ function runAwsCloudWatchLogsInsight(identifiers) {
     executeLogsInsight(identifierTokenParams !== '' ? commandQueryTokenMaxMemoryUsed : '', 'AWS CloudWatch logs insight token max memory used query failed', "Waiting token max memory used query result..", "tkn_max_memory_used.json");
 }
 
+// Execute logs insight query
 function executeLogsInsight(commandQuery, messageCommand, messageDelay, path) {
     if (commandQuery === '') {
         return;
@@ -393,6 +410,7 @@ function executeLogsInsight(commandQuery, messageCommand, messageDelay, path) {
     getLogsInsightResult(path);
 }
 
+// Fetch logs insight query result
 function getLogsInsightResult(fileNamePostfix) {
     try {
         let queryIdString = fs.readFileSync("outputs/logs_insight/query_id_" + fileNamePostfix);
@@ -404,11 +422,13 @@ function getLogsInsightResult(fileNamePostfix) {
     executeShell('aws logs get-query-results --query-id ' + queryIdJson.queryId + ' >  outputs/logs_insight/query_result_' + fileNamePostfix, 'AWS CloudWatch logs insight fetch query result failed');
 }
 
+// Subtract date with minutes
 function subtractMinutes(numOfMinutes, date = new Date()) {
     date.setMinutes(date.getMinutes() - numOfMinutes);
     return date;
 }
 
+// Artificially perform delay situation
 function delayProgress(seconds, message) {
     for (let i = 0; i < seconds; i++) {
         console.log(message);
