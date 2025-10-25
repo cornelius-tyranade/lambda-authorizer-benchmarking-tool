@@ -1,6 +1,6 @@
 # Lambda Authorizer Benchmarking Tool
 
-> The purpose of this application is to calculate the performance of Lambda Authorizer-enabled serverless functions. It was created as part of the MSc in Cloud Computing Research Project at the National College of Ireland.
+> The purpose of this application is to calculate the performance of Lambda Authorizer-enabled serverless functions.
 
 ## Prerequisites
 
@@ -771,7 +771,7 @@ executeLogsInsight(<identifierParams|identifierRequestParams|identifierTokenPara
 
 ## Authors
 
-- **Cornelius** - _Initial work_ - [cornelius-tyranade](https://github.com/cornelius-tyranade) - x21126747@student.ncirl.ie
+- **Cornelius** - _Initial work_ - [cornelius-tyranade](https://github.com/cornelius-tyranade) - tyranadeisn1@gmail.com
 
 ## License
 
